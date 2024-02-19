@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { registerAction } from "../redux/actions/register"
+// I LIKE REACT
 
 const Register = () => {
     const dispatch = useDispatch()
