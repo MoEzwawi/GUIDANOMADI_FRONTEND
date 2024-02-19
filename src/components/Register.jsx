@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { registerAction } from "../redux/actions/register"
 // I LIKE REACT A LOT
+// BUT IT'S TIME TO SAY GOOD NIGHT
 
 const Register = () => {
     const dispatch = useDispatch()
