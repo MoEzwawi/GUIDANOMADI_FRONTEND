@@ -1,4 +1,4 @@
-export const API = 'http://localhost:3001/properties'
+export const API = 'http://localhost:3001/properties?page=1&size=3  '
 export const GET_PROPERTIES = 'GET_PROPERTIES'
 
 export const getPropertiesAction = () => {

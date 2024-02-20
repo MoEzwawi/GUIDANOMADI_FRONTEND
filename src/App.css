@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 .App {
   text-align: center;
 }
@@ -32,7 +34,23 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.dimensione-var {
+  font-size: 1.2em;
+}
+
+@media (max-width: 576px) {
+  .dimensione-var {
+    font-size: 1em;
+  }
+}
+
+
+* {
+  font-family: "Montserrat", sans-serif;
 }

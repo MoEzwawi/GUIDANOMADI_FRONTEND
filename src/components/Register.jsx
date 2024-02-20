@@ -1,11 +1,11 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { registerAction } from "../redux/actions/register"
-// I LIKE REACT A LOT
-// BUT IT'S TIME TO SAY GOOD NIGHT
+import { Alert } from "react-bootstrap"
 
 const Register = () => {
     const dispatch = useDispatch()
+    const [showAlert, setShowAlert] = useState(false)
     const [data, setData] = useState({
         firstName: '',
         lastName: '',
@@ -21,6 +21,13 @@ const Register = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(registerAction(data))
+        setData({
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: ''
+        })
+        setShowAlert(true)
     }
     return (
         <div className="p-5 bg-warning m-5">
@@ -51,6 +58,7 @@ const Register = () => {
                 </div>
                 <button>SUBMIT</button>
             </form>
+            {showAlert && <Alert variant="danger">Registrazione avvenuta correttamente!</Alert>}
         </div>
     )
 }

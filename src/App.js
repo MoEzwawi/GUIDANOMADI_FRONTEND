@@ -5,10 +5,12 @@ import Login from './components/Login';
 import Properties from './components/Properties';
 import Register from './components/Register';
 import NewPropertyForm from './components/NewPropertyForm';
+import Topbar from './components/Topbar';
 
 function App() {
   return (
     <>
+      <Topbar />
       <BrowserRouter>
         <Routes>
           <Route path='/login' element={<Login />}></Route>
