@@ -36,7 +36,7 @@ const Login = () => {
     };
 
     return (
-        <div className="p-5 bg-warning m-5">
+        <div className="p-5 bg-primary m-5">
             <form onSubmit={handleSubmit}>
                 <div>
                     <input

@@ -1,0 +1,19 @@
+$primary: #8dc53e;
+$secondary: #b2d76e;
+$tertiary: #d8ea9e;
+$dark: #060002;
+$light: #fefdce;
+$theme-colors: (
+    'primary': $primary,
+    'secondary': $secondary,
+    'tertiary': $tertiary,
+    'dark': $dark,
+    'light':$light,
+);
+// $border-color: #1a0742;
+// $display-font-sizes: (
+//     1: 7.5rem,
+// );
+
+// Import Bootstrap
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
