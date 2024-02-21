@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginAction } from "../redux/actions/login";
-import { Alert } from "react-bootstrap";
+import { Alert, Form, Button } from "react-bootstrap";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -36,29 +36,32 @@ const Login = () => {
     };
 
     return (
-        <div className="p-5 bg-primary m-5">
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <input
-                        placeholder="Inserisci email"
+        <div className="p-5 bg-primary m-5 mx-3 mx-md-auto rounded" style={{ maxWidth: '576px' }}>
+            <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control
+                        type="email"
+                        placeholder="Enter email"
                         value={data.email}
-                        onChange={(e) => {
-                            handleInputChange("email", e.target.value);
-                        }}
+                        onChange={(e) => handleInputChange("email", e.target.value)}
                     />
-                </div>
-                <div>
-                    <input
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
                         type="password"
-                        placeholder="Inserisci password"
+                        placeholder="Password"
                         value={data.password}
-                        onChange={(e) => {
-                            handleInputChange("password", e.target.value);
-                        }}
+                        onChange={(e) => handleInputChange("password", e.target.value)}
                     />
-                </div>
-                <button type="submit">SUBMIT</button>
-            </form>
+                </Form.Group>
+
+                <Button variant="dark" type="submit">
+                    <span className="text-primary">LOG</span><span>IN</span>
+                </Button>
+            </Form>
             {showAlert && (
                 <Alert variant={error ? "danger" : "success"} onClose={() => setShowAlert(false)} dismissible>
                     {error ? error : "Login riuscito!"}
