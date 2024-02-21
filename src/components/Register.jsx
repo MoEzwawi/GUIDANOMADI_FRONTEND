@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerAction } from "../redux/actions/register";
 import { Alert, Form, Button } from "react-bootstrap";
+import { loginAction } from "../redux/actions/login";
 
 const Register = () => {
     const dispatch = useDispatch();
@@ -50,14 +51,12 @@ const Register = () => {
 
     const handleSubmit = () => {
         dispatch(registerAction(data));
-        setData({
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: ''
-        });
         setShowAlert(true);
+        setTimeout(() => {
+            dispatch(loginAction(data));
+        }, 500);
     };
+
 
     return (
         <div className="p-5 bg-primary m-5 mx-3 mx-md-auto rounded" style={{ maxWidth: '576px' }}>
