@@ -7,27 +7,25 @@ import Properties from './components/Properties';
 import Register from './components/Register';
 import NewPropertyForm from './components/NewPropertyForm';
 import Topbar from './components/Topbar';
+import { useEffect, useState } from 'react';
 
-const isAuthenticated = () => {
-  return localStorage.getItem('authToken ');
-}
-const PrivateRoute = ({ element, ...rest }) => {
-  return isAuthenticated() ? <>{element}</> : <Navigate to="/login" />;
-}
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const checkToken = localStorage.getItem('authToken')
+  useEffect(() => {
+    checkToken ? setIsAuthenticated(true) : setIsAuthenticated(false)
+  }, [checkToken])
   return (
     <>
-      <Topbar />
       <BrowserRouter>
+        <Topbar />
         <Routes>
-          <Route path='/login' element={isAuthenticated ? <Login /> : <Properties />}></Route>
-          <Route path='/register' element={<Register />}></Route>
-          <Route path='/properties' element={<Properties />}></Route>
-          <Route path='/newProperty' element={<NewPropertyForm />}></Route>
-          <Route></Route>
-          <Route></Route>
-          <Route></Route>
+          <Route path='/login' element={!isAuthenticated ? <Login /> : < Navigate to="/properties" />}></Route>
+          <Route path='/register' element={!isAuthenticated ? <Register /> : < Navigate to="/properties" />}></Route>
+          <Route path='/properties' element={isAuthenticated ? <Properties /> : < Navigate to="/login" />}></Route>
+          <Route path='/newProperty' element={isAuthenticated ? <NewPropertyForm /> : < Navigate to="/login" />}></Route>
+          <Route path='*' element={isAuthenticated ? < Navigate to="/properties" /> : < Navigate to="/login" />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -13,12 +13,12 @@ const Properties = () => {
             .then(() => {
                 setTimeout(() => {
                     setIsLoading(false);
-                }, 500); // Imposta il timeout a 500 millisecondi (mezzo secondo)
+                }, 500)
             })
             .catch(() => {
                 setTimeout(() => {
                     setIsLoading(false);
-                }, 500); // Anche in caso di errore, assicurati di impostare isLoading su false dopo il timeout
+                }, 500)
             });
     }, [dispatch]);
 

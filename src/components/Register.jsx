@@ -55,6 +55,9 @@ const Register = () => {
         setTimeout(() => {
             dispatch(loginAction(data));
         }, 500);
+        setTimeout(() => {
+            window.location.reload()
+        }, 1000)
     };
 
 

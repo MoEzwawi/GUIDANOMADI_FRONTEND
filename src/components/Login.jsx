@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginAction } from "../redux/actions/login";
 import { Alert, Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const navigate = useNavigate()
     const dispatch = useDispatch();
     const [data, setData] = useState({
         email: "",
@@ -29,10 +31,14 @@ const Login = () => {
                 password: "",
             });
             setError(null);
+            navigate('/properties')
         } catch (error) {
             setError(error.message);
             setShowAlert(true);
         }
+        //if (!error) {
+        //  window.location.reload()
+        //}
     };
 
     return (
