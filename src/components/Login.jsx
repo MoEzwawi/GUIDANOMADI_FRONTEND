@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginAction } from "../redux/actions/login";
 import { Alert, Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
     const navigate = useNavigate()
@@ -26,19 +26,12 @@ const Login = () => {
         try {
             await dispatch(loginAction(data));
             setShowAlert(true);
-            setData({
-                email: "",
-                password: "",
-            });
             setError(null);
             navigate('/properties')
         } catch (error) {
             setError(error.message);
             setShowAlert(true);
         }
-        //if (!error) {
-        //  window.location.reload()
-        //}
     };
 
     return (
@@ -73,6 +66,9 @@ const Login = () => {
                     {error ? error : "Login riuscito!"}
                 </Alert>
             )}
+            <div className="d-flex justify-content-end text-dark">
+                <Link to='/register' style={{ color: 'black' }}>Non sei ancora registrato?</Link>
+            </div>
         </div>
     );
 };

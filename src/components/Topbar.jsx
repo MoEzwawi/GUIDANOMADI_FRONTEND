@@ -7,6 +7,8 @@ import { CaretDownFill } from 'react-bootstrap-icons';
 import { useLocation } from 'react-router-dom';
 
 const Topbar = () => {
+    const currentUserString = localStorage.getItem('currentUser');
+    const currentUser = JSON.parse(currentUserString);
     const location = useLocation()
     const renderTopbar = () => {
         if (location.pathname === '/login' || location.pathname === '/register') {
@@ -16,8 +18,7 @@ const Topbar = () => {
         }
     }
     const logout = () => {
-        localStorage.removeItem('authToken')
-        window.location.reload()
+
     }
 
     return (
@@ -40,12 +41,11 @@ const Topbar = () => {
                         <Nav className="ml-auto mb-3 mb-md-0">
                             <NavDropdown title={
                                 <span style={{ fontSize: '1.2em' }}>
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Aldo_Baglio.jpg" alt="User Avatar" height="47px" width="47px" className="rounded-circle" />
-                                    <span className='fw-bold text-light my-0 mx-2'>Aldo Baglio</span>
+                                    <img src={currentUser.avatarUrl} alt="User Avatar" height="47px" width="47px" className="rounded-circle" />
+                                    <span className='fw-bold text-light my-0 mx-2'>{currentUser.firstName + ' ' + currentUser.lastName}</span>
                                     <span className='fw-bold text-light'><CaretDownFill /></span>
                                     {/* QUI DEVO TOGLIERE LA CACATA DEL DROPDOWN E METTERCI UN OFFCANVAS */}
-                                </span>
-                            }
+                                </span>}
                                 id="basic-nav-dropdown">
                                 <NavDropdown.Item onClick={logout}>LOG OUT</NavDropdown.Item>
                             </NavDropdown>

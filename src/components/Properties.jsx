@@ -30,7 +30,7 @@ const Properties = () => {
                     <Spinner animation="border" role="status" variant="danger">
                         <span className="visually-hidden">Loading...</span>
                     </Spinner>}
-                {!isLoading && properties.content.content.map((property, i) => (
+                {!isLoading && localStorage?.getItem('authToken') && properties.content.content.map((property, i) => (
                     <Card key={property.id} className="m-5" style={{ width: '18rem' }}>
                         <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
                         <Card.Body>

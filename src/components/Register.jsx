@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerAction } from "../redux/actions/register";
 import { Alert, Form, Button } from "react-bootstrap";
-import { loginAction } from "../redux/actions/login";
 
 const Register = () => {
     const dispatch = useDispatch();
@@ -52,12 +51,6 @@ const Register = () => {
     const handleSubmit = () => {
         dispatch(registerAction(data));
         setShowAlert(true);
-        setTimeout(() => {
-            dispatch(loginAction(data));
-        }, 500);
-        setTimeout(() => {
-            window.location.reload()
-        }, 1000)
     };
 
 

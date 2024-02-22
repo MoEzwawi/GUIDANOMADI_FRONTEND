@@ -1,3 +1,5 @@
+import { getCurrentUserAction } from "./currentUser";
+
 export const API = 'http://localhost:3001/auth/login'
 export const LOGIN = 'LOGIN'
 
@@ -23,7 +25,7 @@ export const loginAction = (obj) => {
                 payload: data,
             });
             console.log('il token:', data);
-            return data;
+            dispatch(getCurrentUserAction())
         } catch (error) {
             throw error;
         }

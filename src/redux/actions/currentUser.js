@@ -1,16 +1,12 @@
-import { loginAction } from "./login";
+export const API = 'http://localhost:3001/users/me'
+export const GET_CURRENT_USER = 'GET_CURRENT_USER'
 
-export const API = 'http://localhost:3001/auth/register'
-export const REGISTER = 'REGISTER'
-
-export const registerAction = (obj) => {
+export const getCurrentUserAction = () => {
     return async (dispatch) => {
         fetch(API, {
-            method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(obj)
+                "Authorization": "Bearer " + localStorage.getItem('authToken')
+            }
         })
             .then((res) => {
                 if (res.ok) {
@@ -21,11 +17,11 @@ export const registerAction = (obj) => {
             })
             .then((data) => {
                 dispatch({
-                    type: REGISTER,
+                    type: GET_CURRENT_USER,
                     payload: data,
                 });
-                console.log("Questo è l'id", data)
-                dispatch(loginAction(obj))
+                localStorage.setItem('currentUser', JSON.stringify(data))
+                window.location.reload()
             })
             .catch((err) => {
                 console.log(err);
