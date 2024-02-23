@@ -2,10 +2,9 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginAction } from "../redux/actions/login";
 import { Alert, Form, Button } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Login = () => {
-    const navigate = useNavigate()
     const dispatch = useDispatch();
     const [data, setData] = useState({
         email: "",
@@ -27,7 +26,6 @@ const Login = () => {
             await dispatch(loginAction(data));
             setShowAlert(true);
             setError(null);
-            navigate('/properties')
         } catch (error) {
             setError(error.message);
             setShowAlert(true);
@@ -63,7 +61,7 @@ const Login = () => {
             </Form>
             {showAlert && (
                 <Alert variant={error ? "danger" : "success"} onClose={() => setShowAlert(false)} dismissible>
-                    {error ? error : "Login riuscito!"}
+                    {error ? error : "Login riuscito! 🚀"}
                 </Alert>
             )}
             <div className="d-flex justify-content-end text-dark">

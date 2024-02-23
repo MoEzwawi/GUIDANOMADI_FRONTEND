@@ -102,7 +102,7 @@ const Register = () => {
                 </Button>
             </Form>
             {showAlert && !errorNome && !errorCognome && !errorEmail && !errorPw &&
-                <Alert variant="danger">Registrazione avvenuta correttamente!</Alert>}
+                <Alert variant="danger">Registrazione avvenuta correttamente! 🚀</Alert>}
         </div>
     );
 };
