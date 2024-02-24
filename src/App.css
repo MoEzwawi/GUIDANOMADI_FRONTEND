@@ -54,3 +54,58 @@
 * {
   font-family: "Montserrat", sans-serif;
 }
+
+.logo-volante {
+  position: absolute;
+  top: 1.5em;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 380px) {
+  .glogo {
+    height: 65px;
+  }
+}
+
+#myFooter {
+  width: 100%;
+  background-color: #000000;
+  padding: 30px;
+  margin-bottom: 0;
+  color: #8d8c7c;
+  flex-shrink: 0;
+  margin-top: auto;
+}
+
+.icona {
+  cursor: pointer;
+}
+
+.home-carousel-container {
+  height: calc(100vh - (173px));
+}
+
+.crsl-img {
+  height: calc(100vh - (173px));
+  object-fit: cover;
+}
+
+.carousel {
+  height: 100%;
+  width: 100%;
+}
+
+#appjs {
+  background-color: #d8ea9e;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#properties-page-root {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

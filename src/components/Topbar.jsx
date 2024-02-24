@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import image from '../assets/images/GUIDANOMADI_LOGO_final.jpg'
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { Button, Offcanvas } from 'react-bootstrap';
 import { PersonFill } from 'react-bootstrap-icons';
@@ -29,20 +29,20 @@ const Topbar = () => {
     return (
         renderTopbar() ? (
             <>
-                <Navbar expand="md" className="bg-black p-0 ">
+                <Navbar expand="lg" className="bg-black p-0 ">
                     <Container>
                         <Navbar.Brand>
-                            <div className='border border-2 border-tertiary'>
-                                <img src={image} alt='guidanomadi logo' height='65px' />
-                            </div>
+                            <Link to='/home'>
+                                <div className='border border-2 border-tertiary'>
+                                    <img src={image} alt='guidanomadi logo' height='65px' />
+                                </div>
+                            </Link>
                         </Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" className='border-white' />
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="me-auto">
-                                <Nav.Link href="#home" className='text-light fw-bold'
-                                    style={{ fontSize: '1.2em' }}>Home</Nav.Link>
-                                <Nav.Link href="#link" className='text-light fw-bold'
-                                    style={{ fontSize: '1.2em' }}>Link</Nav.Link>
+                                <Link to="/home" className='text-light fw-bold mx-2' style={{ fontSize: '1.2em', textDecoration: 'none' }}>Home</Link>
+                                <Link to="/properties" className='text-light fw-bold mx-2' style={{ fontSize: '1.2em', textDecoration: 'none' }}>Annunci</Link>
                             </Nav>
                             <Nav className="ml-auto mb-3 mb-md-0">
                                 <Nav.Link onClick={handleShowOffCanvas}>

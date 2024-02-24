@@ -1,9 +1,9 @@
-export const API = 'http://localhost:3001/properties?page=1&size=3  '
+export const API = 'http://localhost:3001/properties?size=6&page=  '
 export const GET_PROPERTIES = 'GET_PROPERTIES'
 
-export const getPropertiesAction = () => {
+export const getPropertiesAction = (page) => {
     return async (dispatch) => {
-        fetch(API, {
+        fetch(API + page, {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem('authToken')
             }

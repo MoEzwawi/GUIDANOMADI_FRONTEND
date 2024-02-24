@@ -1,57 +1,69 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPropertiesAction } from "../redux/actions/properties";
-import { Spinner, Button, Card, ListGroup } from 'react-bootstrap';
+import { Spinner, Container, Row, Col, Pagination } from 'react-bootstrap';
+import PropertyListing from "./PropertyListing";
 
 const Properties = () => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
+    const [dataLoaded, setDataLoaded] = useState(false)
+    const [page, setPage] = useState(0)
     const properties = useSelector(state => state.properties);
 
     useEffect(() => {
-        dispatch(getPropertiesAction())
+        dispatch(getPropertiesAction(page))
             .then(() => {
                 setTimeout(() => {
                     setIsLoading(false);
+                    setDataLoaded(true)
                 }, 500)
             })
             .catch(() => {
                 setTimeout(() => {
                     setIsLoading(false);
+                    setDataLoaded(false)
                 }, 500)
             });
-    }, [dispatch]);
+    }, [dispatch, page]);
 
     return (
-        <div>
-            <h2>Properties</h2>
-            <div className="d-flex justify-content-center ">
-                {isLoading &&
-                    <Spinner animation="border" role="status" variant="danger">
-                        <span className="visually-hidden">Loading...</span>
-                    </Spinner>}
-                {!isLoading && localStorage?.getItem('authToken') && properties.content.content.map((property, i) => (
-                    <Card key={property.id} className="m-5" style={{ width: '18rem' }}>
-                        <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
-                        <Card.Body>
-                            <Card.Title>{property.id}</Card.Title>
-                            <Card.Text>
-                                Price: {property.price} <br />
-                                Country: {property.address.country} <br />
-                                Location: {property.address.city} <br />
-                                Listing Type: {property.listingType}
-                            </Card.Text>
-                        </Card.Body>
-                        <ListGroup className="list-group-flush">
-                            <ListGroup.Item>Some additional info</ListGroup.Item>
-                            <ListGroup.Item>Another piece of information</ListGroup.Item>
-                        </ListGroup>
-                        <Card.Body>
-                            <Button variant="warning">CIAO</Button>
-                        </Card.Body>
-                    </Card>
-                ))}
-            </div>
+        <div id="properties-page-root">
+            {isLoading &&
+                <Spinner animation="grow" role="status" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>}
+            <Container className='mb-5 mt-3'>
+                <Row className='g-3 mb-5'>
+                    {!isLoading && localStorage?.getItem('authToken') && dataLoaded && properties.content && properties.content.content && properties.content.content.map((property, i) => (
+                        <Col xs={12} md={6} lg={4} xl={3} key={property.id}>
+                            <PropertyListing property={property} />
+                        </Col>
+                    ))}
+                </Row>
+                <Row>
+                    {!isLoading &&
+                        <Col xs={12} className="d-flex justify-content-center align-items-center">
+                            <Pagination>
+                                <Pagination.Item key={1} onClick={() => {
+                                    setPage(0)
+                                }}>1</Pagination.Item>
+                                <Pagination.Item key={2} onClick={() => {
+                                    setPage(1)
+                                }}>2</Pagination.Item>
+                                <Pagination.Item key={3} onClick={() => {
+                                    setPage(2)
+                                }}>3</Pagination.Item>
+                                <Pagination.Item key={4} onClick={() => {
+                                    setPage(3)
+                                }}>4</Pagination.Item>
+                                <Pagination.Item key={5} onClick={() => {
+                                    setPage(4)
+                                }}>5</Pagination.Item>
+                            </Pagination>
+                        </Col>}
+                </Row>
+            </Container>
         </div>
     );
 }

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerAction } from "../redux/actions/register";
 import { Alert, Form, Button } from "react-bootstrap";
+import glogo from '../assets/images/GUIDANOMADI_LOGO_final.jpg'
+import { Link } from "react-router-dom";
 
 const Register = () => {
     const dispatch = useDispatch();
@@ -55,54 +57,62 @@ const Register = () => {
 
 
     return (
-        <div className="p-5 bg-primary m-5 mx-3 mx-md-auto rounded" style={{ maxWidth: '576px' }}>
-            <Form onSubmit={validateDataBeforeSubmit}>
-                <Form.Group className='mb-3' controlId="firstName">
-                    <Form.Label>Nome:</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="es. Mario"
-                        value={data.firstName}
-                        onChange={(e) => handleInputChange('firstName', e.target.value)}
-                    />
-                </Form.Group>
-                {errorNome && userWroteSth && <Alert variant="danger">⚠️ Il nome deve contenere almeno tre caratteri</Alert>}
-                <Form.Group className='mb-3' controlId="lastName">
-                    <Form.Label>Cognome:</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="es. Rossi"
-                        value={data.lastName}
-                        onChange={(e) => handleInputChange('lastName', e.target.value)}
-                    />
-                </Form.Group>
-                {errorCognome && userWroteSth && <Alert variant="danger">⚠️ Il cognome deve contenere almeno tre caratteri</Alert>}
-                <Form.Group className='mb-3' controlId="email">
-                    <Form.Label>E-mail:</Form.Label>
-                    <Form.Control
-                        type="email"
-                        placeholder="es. mario.rossi@email.it"
-                        value={data.email}
-                        onChange={(e) => handleInputChange('email', e.target.value)}
-                    />
-                </Form.Group>
-                {errorEmail && userWroteSth && <Alert variant="danger">⚠️ Inserisci un indirizzo email valido</Alert>}
-                <Form.Group className='mb-3' controlId="password">
-                    <Form.Label>Password:</Form.Label>
-                    <Form.Control
-                        type="password"
-                        placeholder="La tua password"
-                        value={data.password}
-                        onChange={(e) => handleInputChange('password', e.target.value)}
-                    />
-                </Form.Group>
-                {errorPw && userWroteSth && <Alert variant="danger">⚠️ La password deve contenere minimo sei caratteri e almeno un numero</Alert>}
-                <Button variant="dark" type="submit">
-                    <span className="text-primary">REGIS</span><span>TRATI</span>
-                </Button>
-            </Form>
-            {showAlert && !errorNome && !errorCognome && !errorEmail && !errorPw &&
-                <Alert variant="danger">Registrazione avvenuta correttamente! 🚀</Alert>}
+        <div className="bg-black vh-100 p-5">
+            <div className="logo-volante">
+                <img src={glogo} alt="giudanomadi-logo" height='100px' className="glogo" />
+            </div>
+            <div className="p-5 bg-primary mx-3 mx-md-auto rounded" style={{ maxWidth: '576px', marginTop: '6em' }}>
+                <Form onSubmit={validateDataBeforeSubmit}>
+                    <Form.Group className='mb-3' controlId="firstName">
+                        <Form.Label>Nome:</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="es. Mario"
+                            value={data.firstName}
+                            onChange={(e) => handleInputChange('firstName', e.target.value)}
+                        />
+                    </Form.Group>
+                    {errorNome && userWroteSth && <Alert variant="danger">⚠️ Il nome deve contenere almeno tre caratteri</Alert>}
+                    <Form.Group className='mb-3' controlId="lastName">
+                        <Form.Label>Cognome:</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="es. Rossi"
+                            value={data.lastName}
+                            onChange={(e) => handleInputChange('lastName', e.target.value)}
+                        />
+                    </Form.Group>
+                    {errorCognome && userWroteSth && <Alert variant="danger">⚠️ Il cognome deve contenere almeno tre caratteri</Alert>}
+                    <Form.Group className='mb-3' controlId="email">
+                        <Form.Label>E-mail:</Form.Label>
+                        <Form.Control
+                            type="email"
+                            placeholder="es. mario.rossi@email.it"
+                            value={data.email}
+                            onChange={(e) => handleInputChange('email', e.target.value)}
+                        />
+                    </Form.Group>
+                    {errorEmail && userWroteSth && <Alert variant="danger">⚠️ Inserisci un indirizzo email valido</Alert>}
+                    <Form.Group className='mb-3' controlId="password">
+                        <Form.Label>Password:</Form.Label>
+                        <Form.Control
+                            type="password"
+                            placeholder="La tua password"
+                            value={data.password}
+                            onChange={(e) => handleInputChange('password', e.target.value)}
+                        />
+                    </Form.Group>
+                    {errorPw && userWroteSth && <Alert variant="danger">⚠️ La password deve contenere minimo sei caratteri e almeno un numero</Alert>}
+                    <Button variant="dark" type="submit">
+                        <span className="text-primary">REGIS</span><span>TRATI</span>
+                    </Button>
+                </Form>
+                {showAlert && !errorNome && !errorCognome && !errorEmail && !errorPw &&
+                    <Alert variant="danger" className="fs-5">Registrazione avvenuta correttamente! 🚀</Alert>}
+                <div className="d-flex justify-content-end text-dark">
+                    <Link to='/login' style={{ color: 'black', fontWeight: '500' }}>Già registrato? Effettua il login!</Link>
+                </div>
+            </div>
         </div>
     );
 };

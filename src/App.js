@@ -8,6 +8,8 @@ import Register from './components/Register';
 import NewPropertyForm from './components/NewPropertyForm';
 import Topbar from './components/Topbar';
 import { useEffect, useState } from 'react';
+import MyFooter from './components/MyFooter';
+import HomeCarousel from './components/HomeCarousel';
 
 
 function App() {
@@ -17,18 +19,20 @@ function App() {
     checkToken ? setIsAuthenticated(true) : setIsAuthenticated(false)
   }, [checkToken])
   return (
-    <>
+    <div id='appjs'>
       <BrowserRouter>
         <Topbar />
         <Routes>
-          <Route path='/login' element={!isAuthenticated ? <Login /> : < Navigate to="/properties" />}></Route>
-          <Route path='/register' element={!isAuthenticated ? <Register /> : < Navigate to="/properties" />}></Route>
+          <Route path='/login' element={!isAuthenticated ? <Login /> : < Navigate to="/home" />}></Route>
+          <Route path='/register' element={!isAuthenticated ? <Register /> : < Navigate to="/home" />}></Route>
+          <Route path='/home' element={isAuthenticated ? <HomeCarousel /> : <Navigate to='login' />}></Route>
           <Route path='/properties' element={isAuthenticated ? <Properties /> : < Navigate to="/login" />}></Route>
           <Route path='/newProperty' element={isAuthenticated ? <NewPropertyForm /> : < Navigate to="/login" />}></Route>
-          <Route path='*' element={isAuthenticated ? < Navigate to="/properties" /> : < Navigate to="/login" />} />
+          <Route path='*' element={isAuthenticated ? < Navigate to="/home" /> : < Navigate to="/login" />} />
         </Routes>
+        <MyFooter />
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 
