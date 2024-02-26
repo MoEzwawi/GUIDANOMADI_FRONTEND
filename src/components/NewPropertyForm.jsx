@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { newPropertyAction } from "../redux/actions/newProperty";
 import { Form, Button, Alert } from "react-bootstrap";
+import countries from '../assets/data/countries.js';
 
 const NewPropertyForm = () => {
     const dispatch = useDispatch();
@@ -140,7 +141,17 @@ const NewPropertyForm = () => {
                 </Form.Group>
                 <Form.Group controlId="country" className="mb-3">
                     <Form.Label>Paese:</Form.Label>
-                    <Form.Control type="text" value={data.country} onChange={(e) => handleInputChange('country', e.target.value)} />
+                    <Form.Select
+                        value={data.country}
+                        onChange={(e) => handleInputChange('country', e.target.value)}
+                    >
+                        <option value="">Seleziona il paese</option>
+                        {countries.map((country, index) => (
+                            <option key={index} value={country} className="country-select">
+                                {country}
+                            </option>
+                        ))}
+                    </Form.Select>
                     {errors.country && <Alert variant="danger">{errors.country}</Alert>}
                 </Form.Group>
                 <Button variant="dark" type="submit" className="mt-3">INVIA</Button>

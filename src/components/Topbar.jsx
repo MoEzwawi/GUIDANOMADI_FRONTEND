@@ -34,7 +34,7 @@ const Topbar = () => {
                         <Navbar.Brand>
                             <Link to='/home'>
                                 <div className='border border-2 border-tertiary'>
-                                    <img src={image} alt='guidanomadi logo' height='65px' />
+                                    <img src={image} alt='guidanomadi logo' id='navbar-logo' />
                                 </div>
                             </Link>
                         </Navbar.Brand>
@@ -72,6 +72,7 @@ const Topbar = () => {
                         <div className='text-white fs-5'>
                             <PersonFill /><span>Vai alla pagina profilo</span>
                         </div>
+                        <Link to='/newProperty'>PUBBLICA IL TUO ANNUNCIO</Link>
                     </Offcanvas.Body>
                     <Button className='bg-danger mt-auto mb-3 ms-auto me-3 rounded-pill' onClick={logout}>LOG-OUT</Button>
                 </Offcanvas>

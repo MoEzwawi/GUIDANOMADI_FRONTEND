@@ -3,7 +3,7 @@ import { Button, Card, ListGroup } from "react-bootstrap"
 const PropertyListing = ({ property }) => {
     return (
         <Card className="m-5">
-            <Card.Img variant="top" src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg" style={{ height: '220px' }} />
+            <Card.Img variant="top" src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg" style={{ height: '100px' }} />
             <Card.Body style={{ height: ' 240px' }} className="d-flex flex-column justify-content-between">
                 <Card.Title>{property.id}</Card.Title>
                 <Card.Text>
