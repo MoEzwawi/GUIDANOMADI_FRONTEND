@@ -10,6 +10,7 @@ import Topbar from './components/Topbar';
 import { useEffect, useState } from 'react';
 import MyFooter from './components/MyFooter';
 import HomeCarousel from './components/HomeCarousel';
+import UserProfile from './components/UserProfile';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path='/login' element={!isAuthenticated ? <Login /> : < Navigate to="/home" />}></Route>
           <Route path='/register' element={!isAuthenticated ? <Register /> : < Navigate to="/home" />}></Route>
           <Route path='/home' element={isAuthenticated ? <HomeCarousel /> : <Navigate to='login' />}></Route>
+          <Route path='/me' element={isAuthenticated ? <UserProfile /> : <Navigate to='login' />}></Route>
           <Route path='/properties' element={isAuthenticated ? <Properties /> : < Navigate to="/login" />}></Route>
           <Route path='/newProperty' element={isAuthenticated ? <NewPropertyForm /> : < Navigate to="/login" />}></Route>
           <Route path='*' element={isAuthenticated ? < Navigate to="/home" /> : < Navigate to="/login" />} />

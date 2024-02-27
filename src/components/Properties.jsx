@@ -25,7 +25,7 @@ const Properties = () => {
                     setIsLoading(false)
                     setDataLoaded(false)
                 }, 500)
-            });
+            })
     }, [dispatch, page]);
 
     return (

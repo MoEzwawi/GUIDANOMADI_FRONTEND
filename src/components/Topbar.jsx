@@ -69,10 +69,14 @@ const Topbar = () => {
                         }</Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
-                        <div className='text-white fs-5'>
-                            <PersonFill /><span>Vai alla pagina profilo</span>
+                        <div className='text-white fs-5 underline-and-pointer-on-hover mb-4'>
+                            <Link to='/me' style={{ textDecoration: 'none' }}>
+                                <PersonFill /><span>Vai alla pagina profilo</span>
+                            </Link>
                         </div>
-                        <Link to='/newProperty'>PUBBLICA IL TUO ANNUNCIO</Link>
+                        <div className='fs-5 underline-and-pointer-on-hover mb-4'>
+                            <Link to='/newProperty' style={{ textDecoration: 'none' }}>PUBBLICA IL TUO ANNUNCIO</Link>
+                        </div>
                     </Offcanvas.Body>
                     <Button className='bg-danger mt-auto mb-3 ms-auto me-3 rounded-pill' onClick={logout}>LOG-OUT</Button>
                 </Offcanvas>
