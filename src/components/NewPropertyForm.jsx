@@ -147,9 +147,7 @@ const NewPropertyForm = () => {
                     >
                         <option value="">Seleziona il paese</option>
                         {countries.map((country, index) => (
-                            <option key={index} value={country} className="country-select">
-                                {country}
-                            </option>
+                            <option key={index} value={country.name}>{country.emoji} {country.name}</option>
                         ))}
                     </Form.Select>
                     {errors.country && <Alert variant="danger">{errors.country}</Alert>}
