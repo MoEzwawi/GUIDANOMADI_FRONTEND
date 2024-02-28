@@ -109,8 +109,8 @@ const NewPropertyForm = () => {
                     <Form.Label>Tipo di annuncio:</Form.Label>
                     <Form.Select value={data.listingType} onChange={(e) => handleInputChange('listingType', e.target.value)}>
                         <option value="">Seleziona il tipo di annuncio</option>
-                        <option value="FOR_RENT">IN AFFITTO</option>
-                        <option value="FOR_SALE">IN VENDITA</option>
+                        <option value="FOR_RENT">AFFITTO</option>
+                        <option value="FOR_SALE">VENDITA</option>
                     </Form.Select>
                     {errors.listingType && <Alert variant="danger">{errors.listingType}</Alert>}
                 </Form.Group>

@@ -3,12 +3,14 @@ import { Container, Row, Col, Button, Placeholder, Pagination } from "react-boot
 import PropertyListing from "./PropertyListing";
 import { Link } from "react-router-dom";
 import MyPropertyListing from "./MyPropertyListing";
+import PlaceholderCard from "./PlaceholderCard";
 
 const UserProfile = () => {
     const [currentUser, setCurrentUser] = useState(null);
     const [myProperties, setMyProperties] = useState(null);
     const [myPropertiesPage, setMyPropertiesPage] = useState(0)
     const [propertiesLoaded, setPropertiesLoaded] = useState(false)
+    const [propertiesLoadedFirstTime, setPropertiesLoadedFirstTime] = useState(false)
     const [myFavourites, setMyFavourites] = useState(null);
     const [myFavouritesPage, setMyFavouritesPage] = useState(0)
     const [favouritesLoaded, setFavouritesLoaded] = useState(false)
@@ -26,7 +28,7 @@ const UserProfile = () => {
 
         const fetchMyProperties = async () => {
             try {
-                const response = await fetch("http://localhost:3001/users/me/myProperties?size=2&page=" + myPropertiesPage, {
+                const response = await fetch("http://localhost:3001/users/me/myProperties?size=4&page=" + myPropertiesPage, {
                     headers: {
                         "Authorization": "Bearer " + authToken
                     }
@@ -35,6 +37,7 @@ const UserProfile = () => {
                 console.log('data from fetchmyproperties', data)
                 setMyProperties(data);
                 setTimeout(() => {
+                    setPropertiesLoadedFirstTime(true)
                     setPropertiesLoaded(true)
                 }, 500);
             } catch (error) {
@@ -47,7 +50,7 @@ const UserProfile = () => {
     useEffect(() => {
         const fetchMyFavourites = async () => {
             try {
-                const response = await fetch("http://localhost:3001/users/me/myFavourites?size=2&page=" + myFavouritesPage, {
+                const response = await fetch("http://localhost:3001/users/me/myFavourites?size=4&page=" + myFavouritesPage, {
                     headers: {
                         "Authorization": "Bearer " + authToken
                     }
@@ -78,7 +81,6 @@ const UserProfile = () => {
                     </Col>
                     <Col xs={12} md={6} lg={3}>
                         <p>Email: {currentUser.email}</p>
-                        <p>Username: {currentUser.username}</p>
                     </Col>
                     <Col xs={12} md={6} lg={3}>
                         <Link to='/newProperty'><Button variant="primary">Pubblica un nuovo annuncio</Button></Link>
@@ -96,15 +98,29 @@ const UserProfile = () => {
                     <Col xs={12} md={6} lg={4} xl={3}>
                         <h4>Nessun annuncio tra i tuoi preferiti</h4>
                         <Link to='/properties'><Button variant="primary">Scopri gli ultimi annunci</Button></Link>
-                    </Col>) :
-                    <Col xs={12} md={6} lg={4} xl={3}>
+                    </Col>) : (!favouritesLoadedFirstTime ? (
                         <Placeholder animation="glow" className='text-body-tertiary '>
                             <Placeholder xs={12} size="lg" />
                             <Placeholder xs={12} />
                             <Placeholder xs={12} size="sm" />
                             <Placeholder xs={12} size="xs" />
-                        </Placeholder>
-                    </Col>}
+                        </Placeholder>) :
+                        (<>
+                            <Col xs={12} md={6} lg={4} xl={3}>
+                                <PlaceholderCard />
+                            </Col>
+                            <Col xs={12} md={6} lg={4} xl={3} className="d-none d-md-block">
+                                <PlaceholderCard />
+                            </Col>
+                            <Col xs={12} md={6} lg={4} xl={3} className="d-none d-lg-block">
+                                <PlaceholderCard />
+                            </Col>
+                            <Col xs={12} md={6} lg={4} xl={3} className="d-none d-xl-block">
+                                <PlaceholderCard />
+                            </Col>
+                        </>
+                        ))
+                }
             </Row>
             <Row>
                 <Col xs={12} className="d-flex justify-content-center align-items-center">
@@ -170,15 +186,89 @@ const UserProfile = () => {
                         <MyPropertyListing property={property} />
                     </Col>
                 ))) :
-                    <div className="mx-auto">
+                    <Col xs={12} md={6} lg={4} xl={3}>
                         <h4>Non hai ancora pubblicato un annuncio</h4>
                         <Link to='/newProperty'><Button variant="primary">Pubblica il tuo prossimo annuncio</Button></Link>
-                    </div>) : <Placeholder animation="glow" className='text-body-tertiary '>
-                    <Placeholder xs={12} size="lg" />
-                    <Placeholder xs={12} />
-                    <Placeholder xs={12} size="sm" />
-                    <Placeholder xs={12} size="xs" />
-                </Placeholder>}
+                    </Col>) : (!propertiesLoadedFirstTime ? (
+                        <Placeholder animation="glow" className='text-body-tertiary '>
+                            <Placeholder xs={12} size="lg" />
+                            <Placeholder xs={12} />
+                            <Placeholder xs={12} size="sm" />
+                            <Placeholder xs={12} size="xs" />
+                        </Placeholder>) :
+                        (<>
+                            <Col xs={12} md={6} lg={4} xl={3}>
+                                <PlaceholderCard />
+                            </Col>
+                            <Col xs={12} md={6} lg={4} xl={3} className="d-none d-md-block">
+                                <PlaceholderCard />
+                            </Col>
+                            <Col xs={12} md={6} lg={4} xl={3} className="d-none d-lg-block">
+                                <PlaceholderCard />
+                            </Col>
+                            <Col xs={12} md={6} lg={4} xl={3} className="d-none d-xl-block">
+                                <PlaceholderCard />
+                            </Col>
+                        </>
+                        ))
+                }
+            </Row>
+            <Row>
+                <Col xs={12} className="d-flex justify-content-center align-items-center">
+                    {propertiesLoadedFirstTime && (
+                        <Pagination>
+                            {!myProperties.first &&
+                                <>
+                                    <Pagination.First onClick={() => {
+                                        setPropertiesLoaded(false)
+                                        setMyPropertiesPage(0)
+                                    }} />
+                                    {myProperties.number !== 1 &&
+                                        <>
+                                            <Pagination.Prev onClick={() => {
+                                                setPropertiesLoaded(false)
+                                                setMyPropertiesPage(myPropertiesPage - 1)
+                                            }} />
+                                            <Pagination.Ellipsis />
+                                        </>}
+                                    <Pagination.Item onClick={() => {
+                                        setPropertiesLoaded(false)
+                                        setMyPropertiesPage(myPropertiesPage - 1)
+                                    }}>
+                                        {myPropertiesPage}
+                                    </Pagination.Item>
+                                </>
+                            }
+
+                            <Pagination.Item active>
+                                {myPropertiesPage + 1}
+                            </Pagination.Item>
+
+                            {!myProperties.last &&
+                                <>
+                                    <Pagination.Item onClick={() => {
+                                        setPropertiesLoaded(false)
+                                        setMyPropertiesPage(myPropertiesPage + 1)
+                                    }}>
+                                        {myPropertiesPage + 2}
+                                    </Pagination.Item>
+                                    {myProperties.number !== myProperties.totalPages - 2 &&
+                                        <>
+                                            <Pagination.Ellipsis />
+                                            <Pagination.Next onClick={() => {
+                                                setPropertiesLoaded(false)
+                                                setMyPropertiesPage(myPropertiesPage + 1)
+                                            }} />
+                                        </>}
+                                    <Pagination.Last onClick={() => {
+                                        setPropertiesLoaded(false)
+                                        setMyPropertiesPage(myProperties.totalPages - 1)
+                                    }} />
+                                </>
+                            }
+                        </Pagination>
+                    )}
+                </Col>
             </Row>
         </Container>
     );

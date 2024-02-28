@@ -83,7 +83,7 @@ const PropertyListing = ({ property }) => {
                     {property.address.country} <br />
                     <img src={`https://flagsapi.com/${currentCountryCode}/flat/16.png`} alt="country" /><br />
                     {property.address.city} <br />
-                    {property.listingType}
+                    {property.listingType === 'FOR_SALE' ? 'In vendita' : 'In affitto'}
                 </Card.Text>
                 <Button variant="warning">CIAO</Button>
             </Card.Body>
