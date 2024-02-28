@@ -138,6 +138,7 @@ const countries = [
     { name: "Perù", code: "PE" },
     { name: "Polonia", code: "PL" },
     { name: "Portogallo", code: "PT" },
+    { name: "Porto Rico", code: "PR" },
     { name: "Qatar", code: "QA" },
     { name: "Regno Unito", code: "GB" },
     { name: "Repubblica Ceca", code: "CZ" },

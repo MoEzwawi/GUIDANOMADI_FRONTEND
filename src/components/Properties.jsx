@@ -4,9 +4,12 @@ import { getPropertiesAction } from "../redux/actions/properties";
 import { Container, Row, Col, Pagination } from 'react-bootstrap';
 import PropertyListing from "./PropertyListing";
 import CustomSpinner from "./CustomSpinner";
+import MyPropertyListing from "./MyPropertyListing";
 
 const Properties = () => {
     const dispatch = useDispatch();
+    const currentUserString = localStorage.getItem('currentUser');
+    const currentUser = JSON.parse(currentUserString);
     const [isLoading, setIsLoading] = useState(true);
     const [dataLoaded, setDataLoaded] = useState(false)
     const [page, setPage] = useState(0)
@@ -37,7 +40,10 @@ const Properties = () => {
                     <Row className='g-3 mb-5'>
                         {localStorage?.getItem('authToken') && dataLoaded && properties.content && properties.content.content && properties.content.content.map((property, i) => (
                             <Col xs={12} md={6} lg={4} xl={3} key={property.id}>
-                                <PropertyListing property={property} />
+                                {currentUser.id === property.listedBy.id ?
+                                    <MyPropertyListing property={property} /> :
+                                    <PropertyListing property={property} />
+                                }
                             </Col>
                         ))}
                     </Row>
