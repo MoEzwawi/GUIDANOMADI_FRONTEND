@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { newPropertyAction } from "../redux/actions/newProperty";
 import { Form, Button, Alert } from "react-bootstrap";
 import countries from '../assets/data/countries.js';
+import { useNavigate } from "react-router-dom";
 
 const NewPropertyForm = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const [data, setData] = useState({
         listingType: "",
         street: "",
@@ -38,21 +40,29 @@ const NewPropertyForm = () => {
         setUserWroteSth(true);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (userWroteSth) {
             let isValid = validateForm();
             if (isValid) {
-                dispatch(newPropertyAction(data));
-                setData({
-                    listingType: "",
-                    street: "",
-                    streetNumber: "",
-                    zipCode: "",
-                    city: "",
-                    provinceOrState: "",
-                    country: ""
-                });
+                try {
+                    const responseObject = await dispatch(newPropertyAction(data));
+                    console.log('oggetto di risposta', responseObject)
+                    const id = responseObject.propertyId
+                    console.log("l'id che come param", id)
+                    setData({
+                        listingType: "",
+                        street: "",
+                        streetNumber: "",
+                        zipCode: "",
+                        city: "",
+                        provinceOrState: "",
+                        country: ""
+                    });
+                    navigate(`/setPropertyDetails/${id}`)
+                } catch (error) {
+                    console.log(error)
+                }
             }
         }
     };

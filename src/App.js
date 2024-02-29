@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import MyFooter from './components/MyFooter';
 import HomeCarousel from './components/HomeCarousel';
 import UserProfile from './components/UserProfile';
+import SetPropertyDetailsForm from './components/SetPropertyDetailsForm';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
           <Route path='/me' element={isAuthenticated ? <UserProfile /> : <Navigate to='login' />}></Route>
           <Route path='/properties' element={isAuthenticated ? <Properties /> : < Navigate to="/login" />}></Route>
           <Route path='/newProperty' element={isAuthenticated ? <NewPropertyForm /> : < Navigate to="/login" />}></Route>
+          <Route path='/setPropertyDetails/:id' element={isAuthenticated ? <SetPropertyDetailsForm /> : < Navigate to="/login" />}></Route>
           <Route path='*' element={isAuthenticated ? < Navigate to="/home" /> : < Navigate to="/login" />} />
         </Routes>
         <MyFooter />
