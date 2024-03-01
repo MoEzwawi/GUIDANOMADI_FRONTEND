@@ -4,9 +4,11 @@ import { newPropertyAction } from "../redux/actions/newProperty";
 import { Form, Button, Alert } from "react-bootstrap";
 import countries from '../assets/data/countries.js';
 import { useNavigate } from "react-router-dom";
+import HomeMadeSpinner from "./HomeMadeSpinner.jsx";
 
 const NewPropertyForm = () => {
-    const dispatch = useDispatch();
+    const [submitted, setSubmitted] = useState(false)
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [data, setData] = useState({
         listingType: "",
@@ -24,7 +26,8 @@ const NewPropertyForm = () => {
         zipCode: "",
         city: "",
         provinceOrState: "",
-        country: ""
+        country: "",
+        submit: ""
     });
     const [userWroteSth, setUserWroteSth] = useState(false);
 
@@ -42,7 +45,7 @@ const NewPropertyForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (userWroteSth) {
+        if (userWroteSth && !submitted) {
             let isValid = validateForm();
             if (isValid) {
                 try {
@@ -50,18 +53,22 @@ const NewPropertyForm = () => {
                     console.log('oggetto di risposta', responseObject)
                     const id = responseObject.propertyId
                     console.log("l'id che come param", id)
-                    setData({
-                        listingType: "",
-                        street: "",
-                        streetNumber: "",
-                        zipCode: "",
-                        city: "",
-                        provinceOrState: "",
-                        country: ""
-                    });
-                    navigate(`/setPropertyDetails/${id}`)
+                    setSubmitted(true)
+                    setTimeout(() => {
+                        setData({
+                            listingType: "",
+                            street: "",
+                            streetNumber: "",
+                            zipCode: "",
+                            city: "",
+                            provinceOrState: "",
+                            country: ""
+                        });
+                        navigate(`/setPropertyDetails/${id}`)
+                    }, 500);
                 } catch (error) {
                     console.log(error)
+                    setErrors({ submit: '⚠️ Errore nel caricamento dei dati' })
                 }
             }
         }
@@ -114,6 +121,10 @@ const NewPropertyForm = () => {
 
     return (
         <div className="p-5 bg-primary m-5 mx-3 mx-md-auto rounded" style={{ maxWidth: '576px' }}>
+            <h1 className="pb-4 text-center">
+                <span className="text-dark">NUOVO</span>
+                <span className="text-light"> ANNUNCIO</span>
+            </h1>
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="listingType" className="mb-3">
                     <Form.Label>Tipo di annuncio:</Form.Label>
@@ -162,7 +173,10 @@ const NewPropertyForm = () => {
                     </Form.Select>
                     {errors.country && <Alert variant="danger">{errors.country}</Alert>}
                 </Form.Group>
-                <Button variant="dark" type="submit" className="mt-3">INVIA</Button>
+                {errors.submit && <Alert variant="danger">{errors.submit}</Alert>}
+                <Button variant="dark" type="submit" className="property-form-confirm-button mt-4 d-flex justify-content-center align-items-center">
+                    {submitted ? <HomeMadeSpinner /> : 'CONFERMA'}
+                </Button>
             </Form>
         </div>
     );

@@ -3,8 +3,7 @@ import { Button, Card, Modal } from "react-bootstrap"
 import { Trash3Fill } from "react-bootstrap-icons"
 import countries from "../assets/data/countries";
 
-const MyPropertyListing = ({ property }) => {
-    const [getLost, setGetLost] = useState(false)
+const MyPropertyListing = ({ property, listingHasBeenDeleted }) => {
     const [show, setShow] = useState(false);
     const authToken = localStorage.getItem('authToken')
     const handleClose = () => setShow(false);
@@ -23,7 +22,7 @@ const MyPropertyListing = ({ property }) => {
                 }
             })
             if (res.ok) {
-                setGetLost(true)
+                listingHasBeenDeleted()
             } else {
                 throw new Error('unable to delete listing')
             }
@@ -34,40 +33,39 @@ const MyPropertyListing = ({ property }) => {
 
     const currentCountryCode = getCountryCode(property.address.country);
     return (
-        getLost ? <></> :
-            <>
-                <Card className="m-5">
-                    <Card.Img variant="top" src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg" style={{ height: '100px' }} />
-                    <Card.Body style={{ height: '240px' }} className="d-flex flex-column justify-content-between">
-                        <div className="d-flex justify-content-around align-items-center">
-                            <Card.Title>{property.id}</Card.Title>
-                            <div className="fs-2" style={{ cursor: 'pointer' }} onClick={handleShow}><Trash3Fill /></div>
-                        </div>
-                        <Card.Text>
-                            {property.price} <br />
-                            {property.address.country} <br />
-                            <img src={`https://flagsapi.com/${currentCountryCode}/flat/16.png`} alt="country" /><br />
-                            {property.address.city} <br />
-                            {property.listingType === 'FOR_SALE' ? 'In vendita' : 'In affitto'}
-                        </Card.Text>
-                        <Button variant="warning">CIAO</Button>
-                    </Card.Body>
-                </Card>
-                <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Sicuro di voler eliminare?</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>Immobile n° {property.id}, {property.listingType === 'FOR_SALE' ? <span>in vendita</span> : <span>in affitto</span>} a {property.address.city} <img src={`https://flagsapi.com/${currentCountryCode}/flat/16.png`} alt="country" /></Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" id="delete-button" onClick={() => { deletePropertyListing(); handleClose() }}>
-                            Elimina definitivamente
-                        </Button>
-                        <Button variant="primary" onClick={handleClose}>
-                            Annulla
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            </>
+        <>
+            <Card className="m-5">
+                <Card.Img variant="top" src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg" style={{ height: '100px' }} />
+                <Card.Body style={{ height: '240px' }} className="d-flex flex-column justify-content-between">
+                    <div className="d-flex justify-content-around align-items-center">
+                        <Card.Title>{property.id}</Card.Title>
+                        <div className="fs-2" style={{ cursor: 'pointer' }} onClick={handleShow}><Trash3Fill /></div>
+                    </div>
+                    <Card.Text>
+                        {property.price} <br />
+                        {property.address.country} <br />
+                        <img src={`https://flagsapi.com/${currentCountryCode}/flat/16.png`} alt="country" /><br />
+                        {property.address.city} <br />
+                        {property.listingType === 'FOR_SALE' ? 'In vendita' : 'In affitto'}
+                    </Card.Text>
+                    <Button variant="warning">CIAO</Button>
+                </Card.Body>
+            </Card>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Sicuro di voler eliminare?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Immobile n° {property.id}, {property.listingType === 'FOR_SALE' ? <span>in vendita</span> : <span>in affitto</span>} a {property.address.city} <img src={`https://flagsapi.com/${currentCountryCode}/flat/16.png`} alt="country" /></Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" id="delete-button" onClick={() => { deletePropertyListing(); handleClose() }}>
+                        Elimina definitivamente
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                        Annulla
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
     )
 }
 

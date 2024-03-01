@@ -8,12 +8,18 @@ import MyPropertyListing from "./MyPropertyListing";
 
 const Properties = () => {
     const dispatch = useDispatch();
-    const currentUserString = localStorage.getItem('currentUser');
+    const [listingDeleted, setListingDeleted] = useState(0)
+    const currentUserString = localStorage.getItem('currentUser')
     const currentUser = JSON.parse(currentUserString);
     const [isLoading, setIsLoading] = useState(true);
     const [dataLoaded, setDataLoaded] = useState(false)
+    const [showPagination, setShowPagination] = useState(false)
     const [page, setPage] = useState(0)
-    const properties = useSelector(state => state.properties);
+    const properties = useSelector(state => state.properties)
+
+    const listingHasBeenDeleted = () => {
+        setListingDeleted(listingDeleted + 1)
+    }
 
     useEffect(() => {
         dispatch(getPropertiesAction(page))
@@ -21,6 +27,9 @@ const Properties = () => {
                 setTimeout(() => {
                     setIsLoading(false)
                     setDataLoaded(true)
+                    setTimeout(() => {
+                        setShowPagination(true)
+                    }, 300)
                 }, 500)
             })
             .catch(() => {
@@ -29,7 +38,7 @@ const Properties = () => {
                     setDataLoaded(false)
                 }, 500)
             })
-    }, [dispatch, page]);
+    }, [dispatch, page, listingDeleted]);
 
     return (
         <div id="properties-page-root">
@@ -41,7 +50,7 @@ const Properties = () => {
                         {localStorage?.getItem('authToken') && dataLoaded && properties.content && properties.content.content && properties.content.content.map((property, i) => (
                             <Col xs={12} md={6} lg={4} xl={3} key={property.id}>
                                 {currentUser.id === property.listedBy.id ?
-                                    <MyPropertyListing property={property} /> :
+                                    <MyPropertyListing property={property} listingHasBeenDeleted={listingHasBeenDeleted} /> :
                                     <PropertyListing property={property} />
                                 }
                             </Col>
@@ -49,7 +58,7 @@ const Properties = () => {
                     </Row>
                     <Row>
                         <Col xs={12} className="d-flex justify-content-center align-items-center">
-                            {dataLoaded && properties.content && properties.content.totalPages !== null && (
+                            {dataLoaded && properties.content && properties.content.totalPages !== null && showPagination && (
                                 <Pagination>
                                     {!properties.content.first &&
                                         <>

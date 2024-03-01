@@ -6,6 +6,7 @@ import MyPropertyListing from "./MyPropertyListing";
 import PlaceholderCard from "./PlaceholderCard";
 
 const UserProfile = () => {
+    const [listingDeleted, setListingDeleted] = useState(0)
     const [currentUser, setCurrentUser] = useState(null);
     const [myProperties, setMyProperties] = useState(null);
     const [myPropertiesPage, setMyPropertiesPage] = useState(0)
@@ -24,11 +25,17 @@ const UserProfile = () => {
     useEffect(() => {
         fetchUserData();
     }, []);
+    const listingHasBeenDeleted = () => {
+        if (myProperties.numberOfElements === 1 && myPropertiesPage > 0) {
+            setMyPropertiesPage(myPropertiesPage - 1)
+        }
+        setListingDeleted(listingDeleted + 1)
+    }
     useEffect(() => {
 
         const fetchMyProperties = async () => {
             try {
-                const response = await fetch("http://localhost:3001/users/me/myProperties?size=4&page=" + myPropertiesPage, {
+                const response = await fetch("http://localhost:3001/users/me/myProperties?size=3&page=" + myPropertiesPage, {
                     headers: {
                         "Authorization": "Bearer " + authToken
                     }
@@ -45,7 +52,7 @@ const UserProfile = () => {
             }
         };
         fetchMyProperties()
-    }, [authToken, myPropertiesPage])
+    }, [authToken, myPropertiesPage, listingDeleted])
 
     useEffect(() => {
         const fetchMyFavourites = async () => {
@@ -183,7 +190,7 @@ const UserProfile = () => {
                 <h3>I miei annunci</h3>
                 {propertiesLoaded ? (myProperties.content.length > 0 ? (myProperties.content.map(property => (
                     <Col xs={12} md={6} lg={4} xl={3} key={property.id}>
-                        <MyPropertyListing property={property} />
+                        <MyPropertyListing property={property} listingHasBeenDeleted={listingHasBeenDeleted} />
                     </Col>
                 ))) :
                     <Col xs={12} md={6} lg={4} xl={3}>
