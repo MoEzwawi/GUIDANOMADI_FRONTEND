@@ -74,8 +74,9 @@ const Topbar = () => {
                                 <PersonFill /><span>Vai alla pagina profilo</span>
                             </Link>
                         </div>
-                        <div className='fs-5 underline-and-pointer-on-hover mb-4'>
-                            <Link to='/newProperty' style={{ textDecoration: 'none' }} onClick={handleCloseOffCanvas}>PUBBLICA UN NUOVO ANNUNCIO</Link>
+                        <div className='text-white fs-5 underline-and-pointer-on-hover mb-4'>
+                            <Link to='/newProperty' style={{ textDecoration: 'none' }} onClick={handleCloseOffCanvas}>
+                                <span>PUBBLICA UN NUOVO ANNUNCIO</span></Link>
                         </div>
                     </Offcanvas.Body>
                     <Button className='bg-danger mt-auto mb-3 ms-auto me-3 rounded-pill' onClick={logout}>LOG-OUT</Button>
