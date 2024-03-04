@@ -44,7 +44,7 @@ const NewPropertyForm = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         if (userWroteSth && !submitted) {
             let isValid = validateForm();
             if (isValid) {
@@ -168,7 +168,7 @@ const NewPropertyForm = () => {
                     >
                         <option value="">Seleziona il paese</option>
                         {countries.map((country, index) => (
-                            <option key={index} value={country.name}>{country.emoji} {country.name}</option>
+                            <option key={index} value={country.name}>{country.name}</option>
                         ))}
                     </Form.Select>
                     {errors.country && <Alert variant="danger">{errors.country}</Alert>}

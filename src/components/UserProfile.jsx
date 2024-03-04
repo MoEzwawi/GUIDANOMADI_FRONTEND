@@ -35,7 +35,7 @@ const UserProfile = () => {
 
         const fetchMyProperties = async () => {
             try {
-                const response = await fetch("http://localhost:3001/users/me/myProperties?size=3&page=" + myPropertiesPage, {
+                const response = await fetch("http://localhost:3001/users/me/myProperties?size=4&page=" + myPropertiesPage, {
                     headers: {
                         "Authorization": "Bearer " + authToken
                     }
@@ -96,13 +96,13 @@ const UserProfile = () => {
             )}
             {!currentUser && <p>No user data found.</p>}
             <Row className='g-3 mb-5'>
-                <h3>I miei preferiti</h3>
+                <h3 className="mb-3">I miei preferiti</h3>
                 {favouritesLoaded ? (myFavourites.content.length > 0 ? (myFavourites.content.map(property => (
                     <Col xs={12} md={6} lg={4} xl={3} key={property.id}>
                         <PropertyListing property={property} />
                     </Col>
                 ))) :
-                    <Col xs={12} md={6} lg={4} xl={3}>
+                    <Col xs={12} md={6}>
                         <h4>Nessun annuncio tra i tuoi preferiti</h4>
                         <Link to='/properties'><Button variant="primary">Scopri gli ultimi annunci</Button></Link>
                     </Col>) : (!favouritesLoadedFirstTime ? (
@@ -129,71 +129,74 @@ const UserProfile = () => {
                         ))
                 }
             </Row>
-            <Row>
-                <Col xs={12} className="d-flex justify-content-center align-items-center">
-                    {favouritesLoadedFirstTime && (
-                        <Pagination>
-                            {!myFavourites.first &&
-                                <>
-                                    <Pagination.First onClick={() => {
-                                        setFavouritesLoaded(false)
-                                        setMyFavouritesPage(0)
-                                    }} />
-                                    {myFavourites.number !== 1 &&
-                                        <>
-                                            <Pagination.Prev onClick={() => {
+            {favouritesLoadedFirstTime && myFavourites.content.length > 0 &&
+                (<Row>
+                    <Col xs={12} className="d-flex justify-content-center align-items-center">
+                        {favouritesLoadedFirstTime && (
+                            <Pagination>
+                                {!myFavourites.first &&
+                                    <>
+                                        {myFavourites.totalPages > 2 &&
+                                            <Pagination.First onClick={() => {
                                                 setFavouritesLoaded(false)
-                                                setMyFavouritesPage(myFavouritesPage - 1)
-                                            }} />
-                                            <Pagination.Ellipsis />
-                                        </>}
-                                    <Pagination.Item onClick={() => {
-                                        setFavouritesLoaded(false)
-                                        setMyFavouritesPage(myFavouritesPage - 1)
-                                    }}>
-                                        {myFavouritesPage}
-                                    </Pagination.Item>
-                                </>
-                            }
+                                                setMyFavouritesPage(0)
+                                            }} />}
+                                        {myFavourites.number !== 1 &&
+                                            <>
+                                                <Pagination.Prev onClick={() => {
+                                                    setFavouritesLoaded(false)
+                                                    setMyFavouritesPage(myFavouritesPage - 1)
+                                                }} />
+                                                <Pagination.Ellipsis />
+                                            </>}
+                                        <Pagination.Item onClick={() => {
+                                            setFavouritesLoaded(false)
+                                            setMyFavouritesPage(myFavouritesPage - 1)
+                                        }}>
+                                            {myFavouritesPage}
+                                        </Pagination.Item>
+                                    </>
+                                }
 
-                            <Pagination.Item active>
-                                {myFavouritesPage + 1}
-                            </Pagination.Item>
+                                <Pagination.Item active>
+                                    {myFavouritesPage + 1}
+                                </Pagination.Item>
 
-                            {!myFavourites.last &&
-                                <>
-                                    <Pagination.Item onClick={() => {
-                                        setFavouritesLoaded(false)
-                                        setMyFavouritesPage(myFavouritesPage + 1)
-                                    }}>
-                                        {myFavouritesPage + 2}
-                                    </Pagination.Item>
-                                    {myFavourites.number !== myFavourites.totalPages - 2 &&
-                                        <>
-                                            <Pagination.Ellipsis />
-                                            <Pagination.Next onClick={() => {
+                                {!myFavourites.last &&
+                                    <>
+                                        <Pagination.Item onClick={() => {
+                                            setFavouritesLoaded(false)
+                                            setMyFavouritesPage(myFavouritesPage + 1)
+                                        }}>
+                                            {myFavouritesPage + 2}
+                                        </Pagination.Item>
+                                        {myFavourites.number !== myFavourites.totalPages - 2 &&
+                                            <>
+                                                <Pagination.Ellipsis />
+                                                <Pagination.Next onClick={() => {
+                                                    setFavouritesLoaded(false)
+                                                    setMyFavouritesPage(myFavouritesPage + 1)
+                                                }} />
+                                            </>}
+                                        {myFavourites.totalPages > 2 &&
+                                            <Pagination.Last onClick={() => {
                                                 setFavouritesLoaded(false)
-                                                setMyFavouritesPage(myFavouritesPage + 1)
-                                            }} />
-                                        </>}
-                                    <Pagination.Last onClick={() => {
-                                        setFavouritesLoaded(false)
-                                        setMyFavouritesPage(myFavourites.totalPages - 1)
-                                    }} />
-                                </>
-                            }
-                        </Pagination>
-                    )}
-                </Col>
-            </Row>
+                                                setMyFavouritesPage(myFavourites.totalPages - 1)
+                                            }} />}
+                                    </>
+                                }
+                            </Pagination>
+                        )}
+                    </Col>
+                </Row>)}
             <Row className='g-3 mb-5'>
-                <h3>I miei annunci</h3>
+                <h3 className="mb-3">I miei annunci</h3>
                 {propertiesLoaded ? (myProperties.content.length > 0 ? (myProperties.content.map(property => (
                     <Col xs={12} md={6} lg={4} xl={3} key={property.id}>
                         <MyPropertyListing property={property} listingHasBeenDeleted={listingHasBeenDeleted} />
                     </Col>
                 ))) :
-                    <Col xs={12} md={6} lg={4} xl={3}>
+                    <Col xs={12} md={6}>
                         <h4>Non hai ancora pubblicato un annuncio</h4>
                         <Link to='/newProperty'><Button variant="primary">Pubblica il tuo prossimo annuncio</Button></Link>
                     </Col>) : (!propertiesLoadedFirstTime ? (
@@ -220,63 +223,66 @@ const UserProfile = () => {
                         ))
                 }
             </Row>
-            <Row>
-                <Col xs={12} className="d-flex justify-content-center align-items-center">
-                    {propertiesLoadedFirstTime && (
-                        <Pagination>
-                            {!myProperties.first &&
-                                <>
-                                    <Pagination.First onClick={() => {
-                                        setPropertiesLoaded(false)
-                                        setMyPropertiesPage(0)
-                                    }} />
-                                    {myProperties.number !== 1 &&
-                                        <>
-                                            <Pagination.Prev onClick={() => {
+            {propertiesLoadedFirstTime && myProperties.content.length > 0 &&
+                (<Row>
+                    <Col xs={12} className="d-flex justify-content-center align-items-center">
+                        {propertiesLoadedFirstTime && (
+                            <Pagination>
+                                {!myProperties.first &&
+                                    <>
+                                        {myProperties.totalPages > 2 &&
+                                            <Pagination.First onClick={() => {
                                                 setPropertiesLoaded(false)
-                                                setMyPropertiesPage(myPropertiesPage - 1)
-                                            }} />
-                                            <Pagination.Ellipsis />
-                                        </>}
-                                    <Pagination.Item onClick={() => {
-                                        setPropertiesLoaded(false)
-                                        setMyPropertiesPage(myPropertiesPage - 1)
-                                    }}>
-                                        {myPropertiesPage}
-                                    </Pagination.Item>
-                                </>
-                            }
+                                                setMyPropertiesPage(0)
+                                            }} />}
+                                        {myProperties.number !== 1 &&
+                                            <>
+                                                <Pagination.Prev onClick={() => {
+                                                    setPropertiesLoaded(false)
+                                                    setMyPropertiesPage(myPropertiesPage - 1)
+                                                }} />
+                                                <Pagination.Ellipsis />
+                                            </>}
+                                        <Pagination.Item onClick={() => {
+                                            setPropertiesLoaded(false)
+                                            setMyPropertiesPage(myPropertiesPage - 1)
+                                        }}>
+                                            {myPropertiesPage}
+                                        </Pagination.Item>
+                                    </>
+                                }
 
-                            <Pagination.Item active>
-                                {myPropertiesPage + 1}
-                            </Pagination.Item>
+                                <Pagination.Item active>
+                                    {myPropertiesPage + 1}
+                                </Pagination.Item>
 
-                            {!myProperties.last &&
-                                <>
-                                    <Pagination.Item onClick={() => {
-                                        setPropertiesLoaded(false)
-                                        setMyPropertiesPage(myPropertiesPage + 1)
-                                    }}>
-                                        {myPropertiesPage + 2}
-                                    </Pagination.Item>
-                                    {myProperties.number !== myProperties.totalPages - 2 &&
-                                        <>
-                                            <Pagination.Ellipsis />
-                                            <Pagination.Next onClick={() => {
+                                {!myProperties.last &&
+                                    <>
+                                        <Pagination.Item onClick={() => {
+                                            setPropertiesLoaded(false)
+                                            setMyPropertiesPage(myPropertiesPage + 1)
+                                        }}>
+                                            {myPropertiesPage + 2}
+                                        </Pagination.Item>
+                                        {myProperties.number !== myProperties.totalPages - 2 &&
+                                            <>
+                                                <Pagination.Ellipsis />
+                                                <Pagination.Next onClick={() => {
+                                                    setPropertiesLoaded(false)
+                                                    setMyPropertiesPage(myPropertiesPage + 1)
+                                                }} />
+                                            </>}
+                                        {myProperties.totalPages > 2 &&
+                                            <Pagination.Last onClick={() => {
                                                 setPropertiesLoaded(false)
-                                                setMyPropertiesPage(myPropertiesPage + 1)
-                                            }} />
-                                        </>}
-                                    <Pagination.Last onClick={() => {
-                                        setPropertiesLoaded(false)
-                                        setMyPropertiesPage(myProperties.totalPages - 1)
-                                    }} />
-                                </>
-                            }
-                        </Pagination>
-                    )}
-                </Col>
-            </Row>
+                                                setMyPropertiesPage(myProperties.totalPages - 1)
+                                            }} />}
+                                    </>
+                                }
+                            </Pagination>
+                        )}
+                    </Col>
+                </Row>)}
         </Container>
     );
 }

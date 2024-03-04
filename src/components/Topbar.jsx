@@ -4,8 +4,10 @@ import Navbar from 'react-bootstrap/Navbar';
 import image from '../assets/images/GUIDANOMADI_LOGO_final.jpg'
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import { Button, Offcanvas } from 'react-bootstrap';
-import { PersonFill } from 'react-bootstrap-icons';
+import { Button, Card, Offcanvas } from 'react-bootstrap';
+import { PersonFill, PlusCircleFill } from 'react-bootstrap-icons';
+import guidanomadiPlaceholder from '../assets/images/placeholder.PNG'
+
 const Topbar = () => {
     const currentUserString = localStorage.getItem('currentUser');
     const currentUser = JSON.parse(currentUserString);
@@ -69,17 +71,27 @@ const Topbar = () => {
                         }</Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
-                        <div className='text-white fs-5 underline-and-pointer-on-hover mb-4'>
-                            <Link to='/me' style={{ textDecoration: 'none' }} onClick={handleCloseOffCanvas}>
-                                <PersonFill /><span>Vai alla pagina profilo</span>
+                        <Card className="bg-primary mb-3 card-dell-offcanvas">
+                            <Card.Body>
+                                <Link to='/me' className="d-flex align-items-center text-white text-decoration-none" onClick={handleCloseOffCanvas}>
+                                    <PersonFill size={20} /><span className="ms-2">VAI ALLA PAGINA PROFILO</span>
+                                </Link>
+                            </Card.Body>
+                        </Card>
+                        <Card className="bg-primary mb-3 card-dell-offcanvas">
+                            <Card.Body>
+                                <Link to='/newProperty' className="d-flex align-items-center text-white text-decoration-none" onClick={handleCloseOffCanvas}>
+                                    <PlusCircleFill size={20} /><span className="ms-2">PUBBLICA UN NUOVO ANNUNCIO</span>
+                                </Link>
+                            </Card.Body>
+                        </Card>
+                        <div className="position-absolute top-50 start-50 translate-middle">
+                            <Link to='/home' onClick={handleCloseOffCanvas}>
+                                <img src={guidanomadiPlaceholder} alt='guida nomadi logo' height='200px' />
                             </Link>
                         </div>
-                        <div className='text-white fs-5 underline-and-pointer-on-hover mb-4'>
-                            <Link to='/newProperty' style={{ textDecoration: 'none' }} onClick={handleCloseOffCanvas}>
-                                <span>PUBBLICA UN NUOVO ANNUNCIO</span></Link>
-                        </div>
                     </Offcanvas.Body>
-                    <Button className='bg-danger mt-auto mb-3 ms-auto me-3 rounded-pill' onClick={logout}>LOG-OUT</Button>
+                    <Button variant='secondary' className='border-0 mt-auto mb-3 ms-auto me-3 rounded-pill' onClick={logout} id='logout-button'>LOG-OUT</Button>
                 </Offcanvas>
             </>
         ) : null

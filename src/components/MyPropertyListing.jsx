@@ -57,10 +57,10 @@ const MyPropertyListing = ({ property, listingHasBeenDeleted }) => {
                 </Modal.Header>
                 <Modal.Body>Immobile n° {property.id}, {property.listingType === 'FOR_SALE' ? <span>in vendita</span> : <span>in affitto</span>} a {property.address.city} <img src={`https://flagsapi.com/${currentCountryCode}/flat/16.png`} alt="country" /></Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" id="delete-button" onClick={() => { deletePropertyListing(); handleClose() }}>
+                    <Button className="border-0" variant="secondary" id="delete-button" onClick={() => { deletePropertyListing(); handleClose() }}>
                         Elimina definitivamente
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button className="border-0" variant="primary" onClick={handleClose}>
                         Annulla
                     </Button>
                 </Modal.Footer>

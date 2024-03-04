@@ -143,6 +143,14 @@
   background-color: red;
 }
 
+#logout-button {
+  transition: background-color 0.3s ease;
+}
+
+#logout-button:hover {
+  background-color: red;
+}
+
 .dot {
   width: 10px;
   height: 10px;
@@ -166,4 +174,30 @@
 .property-form-confirm-button {
   height: 40px;
   width: 125px;
+}
+
+#properties-page-title {
+  margin: 1em 1.5em;
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+#filters-button {
+  background-color: #8dc53e;
+}
+
+#filters-button {
+  transition: box-shadow 0.3s ease;
+}
+
+#filters-button:hover {
+  box-shadow: 0 0 10px 5px #b2d76e;
+}
+
+.card-dell-offcanvas {
+  transition: background-color 0.3s ease;
+}
+
+.card-dell-offcanvas:hover {
+  background-color: #b2d76e !important;
 }
