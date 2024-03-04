@@ -5,7 +5,7 @@ import image from '../assets/images/GUIDANOMADI_LOGO_final.jpg'
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { Button, Card, Offcanvas } from 'react-bootstrap';
-import { PersonFill, PlusCircleFill } from 'react-bootstrap-icons';
+import { HouseFill, PersonFill, PlusCircleFill } from 'react-bootstrap-icons';
 import guidanomadiPlaceholder from '../assets/images/placeholder.PNG'
 
 const Topbar = () => {
@@ -72,20 +72,27 @@ const Topbar = () => {
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                         <Card className="bg-primary mb-3 card-dell-offcanvas">
-                            <Card.Body>
-                                <Link to='/me' className="d-flex align-items-center text-white text-decoration-none" onClick={handleCloseOffCanvas}>
+                            <Link to='/me' className="d-flex align-items-center text-white text-decoration-none" onClick={handleCloseOffCanvas}>
+                                <Card.Body>
                                     <PersonFill size={20} /><span className="ms-2">VAI ALLA PAGINA PROFILO</span>
-                                </Link>
-                            </Card.Body>
+                                </Card.Body>
+                            </Link>
                         </Card>
                         <Card className="bg-primary mb-3 card-dell-offcanvas">
-                            <Card.Body>
-                                <Link to='/newProperty' className="d-flex align-items-center text-white text-decoration-none" onClick={handleCloseOffCanvas}>
+                            <Link to='/newProperty' className="d-flex align-items-center text-white text-decoration-none" onClick={handleCloseOffCanvas}>
+                                <Card.Body>
                                     <PlusCircleFill size={20} /><span className="ms-2">PUBBLICA UN NUOVO ANNUNCIO</span>
-                                </Link>
-                            </Card.Body>
+                                </Card.Body>
+                            </Link>
                         </Card>
-                        <div className="position-absolute top-50 start-50 translate-middle">
+                        <Card className="bg-primary mb-3 card-dell-offcanvas">
+                            <Link to='/properties' className="d-flex align-items-center text-white text-decoration-none" onClick={handleCloseOffCanvas}>
+                                <Card.Body>
+                                    <HouseFill size={20} /><span className="ms-2">ESPLORA ANNUNCI IMMOBILIARI</span>
+                                </Card.Body>
+                            </Link>
+                        </Card>
+                        <div style={{ position: 'absolute', bottom: '38%', left: '50%', transform: 'translateX(-50%) translateY(50%)' }}>
                             <Link to='/home' onClick={handleCloseOffCanvas}>
                                 <img src={guidanomadiPlaceholder} alt='guida nomadi logo' height='200px' />
                             </Link>
