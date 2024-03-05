@@ -74,29 +74,57 @@ const UserProfile = () => {
             }
         };
         fetchMyFavourites();
-    }, [authToken, myFavouritesPage]);
+    }, [authToken, myFavouritesPage])
+
+    const [isMouseDown, setIsMouseDown] = useState(false)
+    const handleMouseDown = () => {
+        setIsMouseDown(true);
+    }
+
+    const handleMouseUp = () => {
+        setIsMouseDown(false);
+    }
 
     return (
         <Container>
             {currentUser && (
-                <Row className='my-3 align-items-center'>
-                    <Col xs={12} md={6} lg={3} className="d-flex justify-content-center align-items-center">
-                        <img src={currentUser.avatarUrl} alt="User Avatar" height='100px' width='100px' className="rounded-circle" />
+                <Row className='my-4 align-items-center bg-primary rounded-3 p-4'>
+                    <Col xs={12} md={3} className="d-flex justify-content-center align-items-center">
+                        <div className="rounded-circle fs-1 fw-bolder" style={{
+                            cursor: 'pointer',
+                            border: '3px solid black',
+                            height: '115px',
+                            width: '115px',
+                            padding: '0',
+                        }}>
+                            <img src={currentUser.avatarUrl} alt="User Avatar" height='110px' width='110px' className="rounded-circle"
+                                onMouseDown={handleMouseDown}
+                                onMouseUp={handleMouseUp}
+                                id='user-profile-pic'
+                                style={{
+                                    cursor: 'pointer',
+                                    margin: '0',
+                                    transition: 'transform 0.2s',
+                                    transform: isMouseDown ? 'scale(0.95)' : 'scale(1)',
+                                }} />
+                        </div>
                     </Col>
-                    <Col xs={12} md={6} lg={3}>
-                        <h2>{currentUser.firstName} {currentUser.lastName}</h2>
+                    <Col xs={12} md={6} className="d-flex flex-column justify-content-evenly align-items-start">
+                        <div>
+                            <h1 style={{ fontWeight: '400', fontSize: '3em' }}><span className="text-black">{currentUser.firstName.toUpperCase()}</span><span className="text-white">{currentUser.lastName.toUpperCase()}</span></h1>
+                        </div>
+                        <div>
+                            <p>{currentUser.email}</p>
+                        </div>
                     </Col>
-                    <Col xs={12} md={6} lg={3}>
-                        <p>Email: {currentUser.email}</p>
-                    </Col>
-                    <Col xs={12} md={6} lg={3}>
-                        <Link to='/newProperty'><Button variant="primary">Pubblica un nuovo annuncio</Button></Link>
+                    <Col xs={12} md={3}>
+                        <Link to='/newProperty'><Button variant="dark">Pubblica un nuovo annuncio</Button></Link>
                     </Col>
                 </Row>
             )}
             {!currentUser && <p>No user data found.</p>}
             <Row className='g-3 mb-5'>
-                <h3 className="mb-3">I miei preferiti</h3>
+                <h3 className="mt-4">I miei preferiti</h3>
                 {favouritesLoaded ? (myFavourites.content.length > 0 ? (myFavourites.content.map(property => (
                     <Col xs={12} md={6} lg={4} xl={3} key={property.id}>
                         <PropertyListing property={property} />
@@ -190,7 +218,7 @@ const UserProfile = () => {
                     </Col>
                 </Row>)}
             <Row className='g-3 mb-5'>
-                <h3 className="mb-3">I miei annunci</h3>
+                <h3>I miei annunci</h3>
                 {propertiesLoaded ? (myProperties.content.length > 0 ? (myProperties.content.map(property => (
                     <Col xs={12} md={6} lg={4} xl={3} key={property.id}>
                         <MyPropertyListing property={property} listingHasBeenDeleted={listingHasBeenDeleted} />

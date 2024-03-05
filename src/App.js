@@ -12,6 +12,7 @@ import MyFooter from './components/MyFooter';
 import HomeCarousel from './components/HomeCarousel';
 import UserProfile from './components/UserProfile';
 import SetPropertyDetailsForm from './components/SetPropertyDetailsForm';
+import PropertyDetailPage from './components/PropertyDetailPage';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Route path='/properties' element={isAuthenticated ? <Properties /> : < Navigate to="/login" />}></Route>
           <Route path='/newProperty' element={isAuthenticated ? <NewPropertyForm /> : < Navigate to="/login" />}></Route>
           <Route path='/setPropertyDetails/:id' element={isAuthenticated ? <SetPropertyDetailsForm /> : < Navigate to="/login" />}></Route>
+          <Route path='/property/:id' element={isAuthenticated ? <PropertyDetailPage /> : < Navigate to="/login" />}></Route>
           <Route path='*' element={isAuthenticated ? < Navigate to="/home" /> : < Navigate to="/login" />} />
         </Routes>
         <MyFooter />

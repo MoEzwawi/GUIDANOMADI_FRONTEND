@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Card, Modal } from "react-bootstrap"
 import { Trash3, Trash3Fill } from "react-bootstrap-icons"
 import countries from "../assets/data/countries";
+import { Link } from "react-router-dom";
 
 const MyPropertyListing = ({ property, listingHasBeenDeleted }) => {
     const [show, setShow] = useState(false)
@@ -78,7 +79,9 @@ const MyPropertyListing = ({ property, listingHasBeenDeleted }) => {
                 <Card.Img variant="top" src={thumbnailUrl ? thumbnailUrl : "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg"} style={{ height: '140px' }} />
                 <Card.Body style={{ height: '200px', overflow: 'hidden' }} className="d-flex flex-column justify-content-between">
                     <div className="d-flex justify-content-around align-items-center">
-                        <Card.Title>{property.title !== null ? significantSubstring(property.title) : 'Annuncio immobiliare'}</Card.Title>
+                        <Link to={`/property/${property.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                            <Card.Title className="property-card-title">{property.title !== null ? significantSubstring(property.title) : 'Annuncio immobiliare'}</Card.Title>
+                        </Link>
                         <div className="fs-2" style={{ cursor: 'pointer' }}
                             onClick={() => {
                                 setToBeEliminated(true)

@@ -1,8 +1,8 @@
 import { Card } from "react-bootstrap";
 import { Star, StarFill } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
-
 import countries from '../assets/data/countries.js';
+import { Link } from "react-router-dom";
 
 const PropertyListing = ({ property }) => {
     const [isFav, setIsFav] = useState(null);
@@ -106,7 +106,9 @@ const PropertyListing = ({ property }) => {
             <Card.Img variant="top" src={thumbnailUrl ? thumbnailUrl : "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg"} style={{ height: '140px' }} />
             <Card.Body style={{ height: '200px', overflow: 'hidden' }} className="d-flex flex-column justify-content-between">
                 <div className="d-flex justify-content-around align-items-center">
-                    <Card.Title>{property.title !== null ? significantSubstring(property.title) : 'Annuncio immobiliare'}</Card.Title>
+                    <Link to={`/property/${property.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                        <Card.Title className="property-card-title">{property.title !== null ? significantSubstring(property.title) : 'Annuncio immobiliare'}</Card.Title>
+                    </Link>
                     {isFav !== null && (
                         <div className={isFav ? 'fs-2 text-warning' : 'fs-2 text-black'}
                             style={{ cursor: 'pointer' }}

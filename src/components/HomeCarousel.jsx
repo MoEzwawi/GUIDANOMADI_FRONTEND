@@ -1,31 +1,37 @@
 import Carousel from 'react-bootstrap/Carousel';
 import CustomCarouselImage from './CustomCarouselImage';
+import { useNavigate } from 'react-router-dom';
 
 const HomeCarousel = () => {
+    const navigate = useNavigate()
     return (
         <div className="home-carousel-container">
             <Carousel fade interval={3700} className="carousel">
-                <Carousel.Item>
-                    <CustomCarouselImage imageUrl='https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRZGHg8_gRbATV7P0G-VLHUEMS4fUWFaf7URN02MPICjyUngrRhJqj1mARM2cV8vKSOWRufE3SEv66_-tZ_VNvRp8WlhOl_nFAr6_gHlA' />
+                <Carousel.Item style={{ cursor: 'pointer' }} onClick={() => {
+                    navigate('/properties?city=Tenerife')
+                }}>
+                    <CustomCarouselImage imageUrl='https://a.cdn-hotels.com/gdcs/production58/d1295/5f9d4694-8ce6-4ad8-8bf7-87b4678b67ef.jpg?impolicy=fcrop&w=800&h=533&q=large' />
                     <Carousel.Caption>
-                        <h3>First slide label</h3>
-                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                        <h3 className='text-with-background text-black rounded-3'>
+                            Annunci immobiliari a Tenerife</h3>
                     </Carousel.Caption>
                 </Carousel.Item>
-                <Carousel.Item>
-                    <CustomCarouselImage imageUrl='https://lh5.googleusercontent.com/p/AF1QipM3NE7SwUbxFOOqvEk8y1nhvzwWD0FysnBWJTvP=w675-h390-n-k-no' />
+                <Carousel.Item style={{ cursor: 'pointer' }} onClick={() => {
+                    navigate('/properties?city=Dubai')
+                }}>
+                    <CustomCarouselImage imageUrl='https://images.pexels.com/photos/15693273/pexels-photo-15693273/free-photo-of-citta-notte-yacht-scuro.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' />
                     <Carousel.Caption>
-                        <h3>Second slide label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <h3 className='text-with-background text-black rounded-3'>
+                            Annunci immobiliari a Dubai</h3>
                     </Carousel.Caption>
                 </Carousel.Item>
-                <Carousel.Item>
-                    <CustomCarouselImage imageUrl='https://lh5.googleusercontent.com/p/AF1QipMeTMP4wkVkLLhbKbwUSL0116sXNlp9QywbNLcd=w675-h390-n-k-no' />
+                <Carousel.Item style={{ cursor: 'pointer' }} onClick={() => {
+                    navigate('/properties?city=Bali')
+                }}>
+                    <CustomCarouselImage imageUrl='https://digital.ihg.com/is/image/ihg/intercontinental-bali-8338027557-16x9?' />
                     <Carousel.Caption>
-                        <h3>Third slide label</h3>
-                        <p>
-                            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-                        </p>
+                        <h3 className='text-with-background text-black rounded-3'>
+                            Annunci immobiliari a Bali</h3>
                     </Carousel.Caption>
                 </Carousel.Item>
             </Carousel>

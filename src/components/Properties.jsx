@@ -6,9 +6,14 @@ import countries from '../assets/data/countries.js';
 import PropertyListing from "./PropertyListing";
 import CustomSpinner from "./CustomSpinner";
 import MyPropertyListing from "./MyPropertyListing";
+import { useLocation } from "react-router-dom";
 
 const Properties = () => {
+    const location = useLocation()
+    const queryParameters = new URLSearchParams(location.search)
+    const cityParameter = queryParameters.get('city')
     const dispatch = useDispatch();
+    const [queryParametersChecked, setQueryParametersChecked] = useState(false)
     const [listingDeleted, setListingDeleted] = useState(0)
     const [quickNDrity, setQuickNDirty] = useState(true)
     const currentUserString = localStorage.getItem('currentUser')
@@ -39,7 +44,9 @@ const Properties = () => {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault()
+        if (e) {
+            e.preventDefault()
+        }
         setPage(0)
         const countryString = queryParams.country !== "" ? `&country=${queryParams.country}` : ""
         const cityString = queryParams.city !== "" ? `&city=${queryParams.city}` : ""
@@ -50,23 +57,58 @@ const Properties = () => {
     }
 
     useEffect(() => {
-        dispatch(getPropertiesAction(page, queryParamsString))
-            .then(() => {
-                setTimeout(() => {
-                    setIsLoading(false)
-                    setDataLoaded(true)
+        if (cityParameter !== null) {
+            let countryParameter = ''
+            switch (cityParameter) {
+                case 'Dubai':
+                    countryParameter = 'Emirati Arabi Uniti'
+                    break;
+                case "Bali":
+                    countryParameter = 'Indonesia'
+                    break;
+                default:
+                    countryParameter = 'Spagna'
+            }
+            setQueryParams({
+                country: countryParameter,
+                city: cityParameter,
+                type: "",
+                orderBy: ""
+            })
+            setQueryParamsString('&country=' + countryParameter + '&city=' + cityParameter)
+            setQueryParametersChecked(true)
+        } else {
+            setQueryParams({
+                country: "",
+                city: "",
+                type: "",
+                orderBy: ""
+            })
+            setQueryParamsString("")
+            setQueryParametersChecked(true)
+        }
+    }, [cityParameter])
+
+    useEffect(() => {
+        if (queryParametersChecked) {
+            dispatch(getPropertiesAction(page, queryParamsString))
+                .then(() => {
                     setTimeout(() => {
-                        setShowPagination(true)
-                    }, 300)
-                }, 500)
-            })
-            .catch(() => {
-                setTimeout(() => {
-                    setIsLoading(false)
-                    setDataLoaded(false)
-                }, 500)
-            })
-    }, [dispatch, page, listingDeleted, queryParamsString, quickNDrity]);
+                        setIsLoading(false)
+                        setDataLoaded(true)
+                        setTimeout(() => {
+                            setShowPagination(true)
+                        }, 300)
+                    }, 500)
+                })
+                .catch(() => {
+                    setTimeout(() => {
+                        setIsLoading(false)
+                        setDataLoaded(false)
+                    }, 500)
+                })
+        }
+    }, [dispatch, page, listingDeleted, queryParamsString, quickNDrity, queryParametersChecked])
 
     return (
         <div>
