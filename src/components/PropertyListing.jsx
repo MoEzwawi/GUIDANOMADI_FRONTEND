@@ -3,11 +3,14 @@ import { Star, StarFill } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
 import countries from '../assets/data/countries.js';
 import { Link } from "react-router-dom";
+import { houseDrawingWithGreenGarden } from "../assets/images/houseDrawings"
+
 
 const PropertyListing = ({ property }) => {
     const [isFav, setIsFav] = useState(null);
     const [clicks, setClicks] = useState(0);
     const [thumbnailUrl, setThumbnailUrl] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
     const authToken = localStorage.getItem('authToken')
 
     const getPropertyThumbnail = async (id) => {
@@ -24,9 +27,11 @@ const PropertyListing = ({ property }) => {
                 const data = await res.json()
                 console.log('risposta del get thumbnail', data)
                 setThumbnailUrl(data.imageUrl)
+                setIsLoading(false)
             }
         } catch (error) {
             console.log('errore nella fetch della thumbnail ', error)
+            setIsLoading(false)
         }
     }
 
@@ -103,7 +108,8 @@ const PropertyListing = ({ property }) => {
 
     return (
         <Card className="m-5">
-            <Card.Img variant="top" src={thumbnailUrl ? thumbnailUrl : "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg"} style={{ height: '140px' }} />
+            {isLoading && <Card.Img variant="top" src={houseDrawingWithGreenGarden} style={{ height: '140px' }} />}
+            {!isLoading && <Card.Img variant="top" src={thumbnailUrl ? thumbnailUrl : "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg"} style={{ height: '140px' }} />}
             <Card.Body style={{ height: '200px', overflow: 'hidden' }} className="d-flex flex-column justify-content-between">
                 <div className="d-flex justify-content-around align-items-center">
                     <Link to={`/property/${property.id}`} style={{ textDecoration: 'none', color: 'black' }}>

@@ -3,9 +3,12 @@ import { Button, Card, Modal } from "react-bootstrap"
 import { Trash3, Trash3Fill } from "react-bootstrap-icons"
 import countries from "../assets/data/countries";
 import { Link } from "react-router-dom";
+import { houseDrawingWithGreenGarden } from "../assets/images/houseDrawings"
+
 
 const MyPropertyListing = ({ property, listingHasBeenDeleted }) => {
     const [show, setShow] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const [toBeEliminated, setToBeEliminated] = useState(false)
     const authToken = localStorage.getItem('authToken')
     const handleClose = () => {
@@ -33,9 +36,11 @@ const MyPropertyListing = ({ property, listingHasBeenDeleted }) => {
                 const data = await res.json()
                 console.log('risposta del get thumbnail', data)
                 setThumbnailUrl(data.imageUrl)
+                setIsLoading(false)
             }
         } catch (error) {
             console.log('errore nella fetch della thumbnail ', error)
+            setIsLoading(false)
         }
     }
 
@@ -76,7 +81,8 @@ const MyPropertyListing = ({ property, listingHasBeenDeleted }) => {
     return (
         <>
             <Card className="m-5">
-                <Card.Img variant="top" src={thumbnailUrl ? thumbnailUrl : "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg"} style={{ height: '140px' }} />
+                {isLoading && <Card.Img variant="top" src={houseDrawingWithGreenGarden} style={{ height: '140px' }} />}
+                {!isLoading && <Card.Img variant="top" src={thumbnailUrl ? thumbnailUrl : "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg"} style={{ height: '140px' }} />}
                 <Card.Body style={{ height: '200px', overflow: 'hidden' }} className="d-flex flex-column justify-content-between">
                     <div className="d-flex justify-content-around align-items-center">
                         <Link to={`/property/${property.id}`} style={{ textDecoration: 'none', color: 'black' }}>

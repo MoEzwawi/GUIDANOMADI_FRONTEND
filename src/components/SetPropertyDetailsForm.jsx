@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { isBefore } from 'date-fns';
 import HomeMadeSpinner from './HomeMadeSpinner';
 
 const SetPropertyDetailsForm = () => {
     const [userWroteSth, setUserWroteSth] = useState(false);
+    const [submitted, setSubmitted] = useState(false)
+    const navigate = useNavigate()
     const { id } = useParams()
     useEffect(() => {
         console.log(id)
@@ -130,6 +132,7 @@ const SetPropertyDetailsForm = () => {
                 if (!thumbnailResponse.ok) {
                     throw new Error('Failed to upload thumbnail')
                 }
+                setSubmitted(true)
                 setFormData({
                     title: '',
                     description: '',
@@ -141,6 +144,9 @@ const SetPropertyDetailsForm = () => {
                     price: '',
                     availableFrom: ''
                 })
+                setTimeout(() => {
+                    navigate('/property/' + id)
+                }, 500);
             } catch (error) {
                 console.error('Error updating property details:', error.message);
                 setErrors({ submit: '⚠️ Errore nel caricamento dei dati' });
@@ -210,14 +216,11 @@ const SetPropertyDetailsForm = () => {
                 </Form.Group>
                 {errors.submit && <Alert variant="danger">{errors.submit}</Alert>}
                 <Button variant="dark" type="submit" className="property-form-confirm-button mt-4 d-flex justify-content-center align-items-center">
-                    {/* {submitted ? <HomeMadeSpinner /> : 'CONFERMA'} */}
-                    CONFERMA
+                    {submitted ? <HomeMadeSpinner /> : 'CONFERMA'}
                 </Button>
             </Form>
         </div>
     )
 }
-
-// DOMANI TOCCA FARE LA PAGINA DI DETTAGIO DELLA PROPRIETA'
 
 export default SetPropertyDetailsForm;
