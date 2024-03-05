@@ -4,10 +4,25 @@ import PropertyListing from "./PropertyListing";
 import { Link } from "react-router-dom";
 import MyPropertyListing from "./MyPropertyListing";
 import PlaceholderCard from "./PlaceholderCard";
+import { PencilSquare, PlusLg } from "react-bootstrap-icons";
+import UpdateUserEmailModal from "./UpdateUserEmailModal";
+import UpdateNameAndSurnameModal from "./UpdateNameAndSurnameModal";
+import UpdateProfilePicModal from "./UpdateProfilePicModal";
 
 const UserProfile = () => {
     const [listingDeleted, setListingDeleted] = useState(0)
     const [currentUser, setCurrentUser] = useState(null);
+    const [shrinkTitle, setShrinkTitle] = useState(false)
+    useEffect(() => {
+        const h1title = document.getElementById("user-page-title")
+        if (currentUser) {
+            const titleContent = h1title.textContent
+            const titleLength = titleContent.length
+            if (titleLength > 15) {
+                setShrinkTitle(true)
+            }
+        }
+    }, [currentUser])
     const [myProperties, setMyProperties] = useState(null);
     const [myPropertiesPage, setMyPropertiesPage] = useState(0)
     const [propertiesLoaded, setPropertiesLoaded] = useState(false)
@@ -84,37 +99,53 @@ const UserProfile = () => {
     const handleMouseUp = () => {
         setIsMouseDown(false);
     }
+    const [isHovered, setIsHovered] = useState(false)
+    const handleMouseEnter = () => {
+        setIsHovered(true)
+    }
+    const handleMouseLeave = () => {
+        setIsHovered(false)
+    }
+
+    const [showUpdateProfilePicModal, setShowUpdateProfilePicModal] = useState(false)
+    const [showUpdateEmailModal, setShowUpdateEmailModal] = useState(false)
+    const [showUpdateNameModal, setShowUpdateNameModal] = useState(false)
+
+    const handleShowEmailModal = () => {
+        setShowUpdateEmailModal(true)
+    }
+
+    const handleShowNameModal = () => {
+        setShowUpdateNameModal(true)
+    }
+
+    const handleShowProfilePicModal = () => {
+        setShowUpdateProfilePicModal(true)
+    }
 
     return (
         <Container>
             {currentUser && (
-                <Row className='my-4 align-items-center bg-primary rounded-3 p-4'>
+                <Row className='my-4 mx-3 align-items-center bg-primary rounded-3 p-4'>
                     <Col xs={12} md={3} className="d-flex justify-content-center align-items-center">
-                        <div className="rounded-circle fs-1 fw-bolder" style={{
-                            cursor: 'pointer',
-                            border: '3px solid black',
-                            height: '115px',
-                            width: '115px',
-                            padding: '0',
-                        }}>
-                            <img src={currentUser.avatarUrl} alt="User Avatar" height='110px' width='110px' className="rounded-circle"
-                                onMouseDown={handleMouseDown}
-                                onMouseUp={handleMouseUp}
-                                id='user-profile-pic'
-                                style={{
-                                    cursor: 'pointer',
-                                    margin: '0',
-                                    transition: 'transform 0.2s',
-                                    transform: isMouseDown ? 'scale(0.95)' : 'scale(1)',
-                                }} />
+                        <div className="rounded-circle fs-1 fw-bolder" id="profile-pic-container" onMouseDown={handleMouseDown}
+                            onMouseUp={handleMouseUp} onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave} onClick={handleShowProfilePicModal}>
+                            {isHovered && <PlusLg id="plus-icon" className="text-white fs-1 fw-bolder" style={{ height: '55px', width: '55px' }} />}
+                            <img src={currentUser.avatarUrl} alt="User Avatar" id='user-profile-pic' style={{
+                                transition: 'transform 0.2s',
+                                transform: isMouseDown ? 'scale(0.95)' : 'scale(1)'
+                            }} />
                         </div>
                     </Col>
                     <Col xs={12} md={6} className="d-flex flex-column justify-content-evenly align-items-start">
-                        <div>
-                            <h1 style={{ fontWeight: '400', fontSize: '3em' }}><span className="text-black">{currentUser.firstName.toUpperCase()}</span><span className="text-white">{currentUser.lastName.toUpperCase()}</span></h1>
+                        <div className="d-flex align-items-end">
+                            <h1 id="user-page-title" className={shrinkTitle ? "shrink-title-font-size" : "normal-title-font-size"}><span className="text-black">{currentUser.firstName.toUpperCase()}</span><span className="text-white">{currentUser.lastName.toUpperCase()}</span></h1>
+                            <PencilSquare id="pencil-icon-name" onClick={handleShowNameModal} />
                         </div>
-                        <div>
-                            <p>{currentUser.email}</p>
+                        <div className="d-flex align-items-end">
+                            <p style={{ fontSize: '1.2em' }}>{currentUser.email}</p>
+                            <PencilSquare id="pencil-icon-email" onClick={handleShowEmailModal} />
                         </div>
                     </Col>
                     <Col xs={12} md={3}>
@@ -311,6 +342,12 @@ const UserProfile = () => {
                         )}
                     </Col>
                 </Row>)}
+            {currentUser && <UpdateNameAndSurnameModal showUpdateNameModal={showUpdateNameModal} setShowUpdateNameModal={setShowUpdateNameModal} userfirstName={currentUser.firstName} userLastName={currentUser.lastName} />}
+            {currentUser &&
+                <UpdateUserEmailModal showUpdateEmailModal={showUpdateEmailModal}
+                    setShowUpdateEmailModal={setShowUpdateEmailModal}
+                    userEmail={currentUser.email} />}
+            {currentUser && <UpdateProfilePicModal showUpdateProfilePicModal={showUpdateProfilePicModal} setShowUpdateProfilePicModal={setShowUpdateProfilePicModal} />}
         </Container>
     );
 }
