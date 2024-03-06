@@ -339,3 +339,15 @@
     width: 1220px;
   }
 }
+
+#invia-una-mail {
+  transition: box-shadow 0.3s ease
+}
+
+#invia-una-mail:hover {
+  box-shadow: 0 0 10px 5px #ffffffff;
+}
+
+.text-area {
+  resize: none;
+}

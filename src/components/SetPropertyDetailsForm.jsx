@@ -169,11 +169,11 @@ const SetPropertyDetailsForm = () => {
                 <div className='d-flex flex-column justify-content-center align-items-start'>
                     <Form.Group controlId="description" className="mb-3 w-100">
                         <Form.Label>Descrizione dall'immobile:</Form.Label>
-                        <Form.Control as="textarea" rows={3} name="description" value={formData.description} onChange={(e) => handleInputChange('description', e.target.value)} />
+                        <Form.Control as="textarea" className='text-area' rows={4} name="description" value={formData.description} onChange={(e) => handleInputChange('description', e.target.value)} />
                     </Form.Group>
                     <Form.Group controlId="whyIsPerfect" className="mb-3 w-100">
                         <Form.Label>Perché è perfetto per i nomadi digitali?</Form.Label>
-                        <Form.Control as="textarea" rows={3} name="whyIsPerfect" value={formData.whyIsPerfect} onChange={(e) => handleInputChange('whyIsPerfect', e.target.value)} />
+                        <Form.Control as="textarea" className='text-area' rows={4} name="whyIsPerfect" value={formData.whyIsPerfect} onChange={(e) => handleInputChange('whyIsPerfect', e.target.value)} />
                     </Form.Group>
                 </div>
                 <div className='d-sm-flex justify-content-center align-items-start'>

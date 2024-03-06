@@ -45,6 +45,7 @@ const Topbar = () => {
                             <Nav className="me-auto">
                                 <Link to="/home" className='text-light fw-bold mx-2' style={{ fontSize: '1.2em', textDecoration: 'none' }}>Home</Link>
                                 <Link to="/properties" className='text-light fw-bold mx-2' style={{ fontSize: '1.2em', textDecoration: 'none' }}>Annunci</Link>
+                                <Link to='/community' className='text-light fw-bold mx-2' style={{ fontSize: '1.2em', textDecoration: 'none' }}>Community</Link>
                             </Nav>
                             <Nav className="ml-auto mb-3 mb-md-0">
                                 <Nav.Link onClick={handleShowOffCanvas}>

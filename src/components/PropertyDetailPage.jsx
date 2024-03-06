@@ -4,9 +4,11 @@ import { useParams } from 'react-router-dom';
 import CustomSpinner from './CustomSpinner';
 import { houseDrawingWithGreenGarden } from "../assets/images/houseDrawings"
 import { format } from 'date-fns';
+import SendEmailForm from './SendEmailForm';
 
 const PropertyDetailPage = () => {
     const { id } = useParams()
+    const [wantToSendEmail, setWantToSendEmail] = useState(false)
     const [property, setProperty] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [isThumbnailLoading, setIsThumbnailLoading] = useState(true)
@@ -65,10 +67,10 @@ const PropertyDetailPage = () => {
                     <Row className='d-flex justify-content-center'>
                         <Col xs={12}>
                             <h1 className='text-with-background ps-4 mb-2 d-md-none rounded-3'
-                                style={{ fontStyle: 'italic' }}>{property.title}</h1>
+                                style={{ fontStyle: 'italic' }}>{property.title ? property.title : "Annuncio Immobiliare"}</h1>
                             <div className='rounded-3 overflow-hidden mx-auto mb-4 mt-1' id='detail-carousel-container'>
                                 <h1 className='text-with-background ps-4 mb-0 d-none d-md-block'
-                                    style={{ fontStyle: 'italic' }}>{property.title}</h1>
+                                    style={{ fontStyle: 'italic' }}>{property.title ? property.title : "Annuncio Immobiliare"}</h1>
                                 {propertyImages.length === 0 &&
                                     <img src={isThumbnailLoading ? houseDrawingWithGreenGarden : fallBackThumbnailUrl} alt="house" className='carousel' />}
                                 {propertyImages.length === 1 &&
@@ -129,15 +131,20 @@ const PropertyDetailPage = () => {
                                     <div className='rounded-3 ms-2'>
                                         <p className='name-with-background fs-3 bg-black rounded-3 d-flex justify-content-center mb-0'><span className='text-white my-0 ms-2'>{property.listedBy.firstName.toUpperCase() + ' '}</span>
                                             <span className='text-primary my-0 me-2'>{property.listedBy.lastName.toUpperCase()}</span></p>
-                                        <p className='text-white'>{property.listedBy.email}</p>
+                                        <p className='text-black mt-2' style={{ fontSize: '1.1em' }}>{property.listedBy.email}</p>
                                     </div>
                                 </div>
                                 <div>
-                                    <Button variant='primary' className='text-primary bg-black'>
+                                    <Button variant='primary' className='text-primary bg-black' id='invia-una-mail' onClick={() => {
+                                        setWantToSendEmail(!wantToSendEmail)
+                                    }}>
                                         INVIA UNA MAIL AL PROPRIETARIO
                                     </Button>
                                 </div>
                             </div>
+                            {wantToSendEmail &&
+                                <SendEmailForm property={property} thumbnail={propertyImages[0]} />
+                            }
                         </Col>
                     </Row>
                 </Container>)
