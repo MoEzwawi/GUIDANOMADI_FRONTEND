@@ -5,7 +5,8 @@ Front-end project for digital nomads real estate app
 
 LINK TO THE BACK-END REPO ⚙️
 https://github.com/MoEzwawi/GUIDANOMADI_BACKEND
-
+<br/>
+<br/>
 
 
 # Getting Started with Create React App
