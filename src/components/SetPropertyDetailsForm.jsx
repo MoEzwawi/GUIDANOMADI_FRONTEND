@@ -49,10 +49,10 @@ const SetPropertyDetailsForm = () => {
         const file = event.target.files[0];
         if (file) {
             const fileType = file.type;
-            if (!['image/jpeg', 'image/jpg', 'image/png'].includes(fileType)) {
+            if (!['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(fileType)) {
                 setErrors(prevState => ({
                     ...prevState,
-                    thumbnail: '⚠️ Si prega di selezionare un file di tipo JPEG, JPG o PNG.'
+                    thumbnail: '⚠️ Si prega di selezionare un file di tipo JPEG, JPG, PNG o WEBP.'
                 }));
             } else {
                 setFormData(prevState => ({
@@ -211,7 +211,7 @@ const SetPropertyDetailsForm = () => {
                 </Form.Group>
                 <Form.Group controlId="thumbnail" className="mb-3 mx-2">
                     <Form.Label>Immagine di copertina:</Form.Label>
-                    <Form.Control type="file" accept=".jpg,.jpeg,.png" onChange={handleThumbnailChange} />
+                    <Form.Control type="file" accept=".jpg,.jpeg,.png,.webp" onChange={handleThumbnailChange} />
                     {errors.thumbnail && <Alert variant="danger">{errors.thumbnail}</Alert>}
                 </Form.Group>
                 {errors.submit && <Alert variant="danger">{errors.submit}</Alert>}

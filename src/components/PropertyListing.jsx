@@ -98,7 +98,7 @@ const PropertyListing = ({ property }) => {
     const currentCountryCode = getCountryCode(property.address.country)
 
     const significantSubstring = (string) => {
-        const maxLength = 22
+        const maxLength = 20
         if (string.length > maxLength) {
             return string.substring(0, maxLength) + '...'
         } else {

@@ -128,10 +128,10 @@ const UserProfile = () => {
             {currentUser && (
                 <Row className='my-4 mx-3 align-items-center bg-primary rounded-3 p-4'>
                     <Col xs={12} md={3} className="d-flex justify-content-center align-items-center">
-                        <div className="rounded-circle fs-1 fw-bolder" id="profile-pic-container" onMouseDown={handleMouseDown}
+                        <div className="rounded-circle" id="profile-pic-container" onMouseDown={handleMouseDown}
                             onMouseUp={handleMouseUp} onMouseEnter={handleMouseEnter}
                             onMouseLeave={handleMouseLeave} onClick={handleShowProfilePicModal}>
-                            {isHovered && <PlusLg id="plus-icon" className="text-white fs-1 fw-bolder" style={{ height: '55px', width: '55px' }} />}
+                            {isHovered && <PlusLg id="plus-icon" className="text-white" style={{ height: '50px', width: '50px' }} />}
                             <img src={currentUser.avatarUrl} alt="User Avatar" id='user-profile-pic' style={{
                                 transition: 'transform 0.2s',
                                 transform: isMouseDown ? 'scale(0.95)' : 'scale(1)'

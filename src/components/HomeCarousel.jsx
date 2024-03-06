@@ -19,7 +19,7 @@ const HomeCarousel = () => {
                 <Carousel.Item style={{ cursor: 'pointer' }} onClick={() => {
                     navigate('/properties?city=Dubai')
                 }}>
-                    <CustomCarouselImage imageUrl='https://images.pexels.com/photos/15693273/pexels-photo-15693273/free-photo-of-citta-notte-yacht-scuro.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' />
+                    <CustomCarouselImage imageUrl='https://images.wallpaperscraft.com/image/single/dubai_united_arab_emirates_sea_83651_2560x1440.jpg' />
                     <Carousel.Caption>
                         <h3 className='text-with-background text-black rounded-3'>
                             Annunci immobiliari a Dubai</h3>
