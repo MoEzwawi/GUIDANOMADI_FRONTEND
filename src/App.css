@@ -340,14 +340,25 @@
   }
 }
 
-#invia-una-mail {
+.invia-una-mail {
   transition: box-shadow 0.3s ease
 }
 
-#invia-una-mail:hover {
+.invia-una-mail:hover {
   box-shadow: 0 0 10px 5px #ffffffff;
 }
 
 .text-area {
   resize: none;
+}
+
+.send-email-form {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.send-email-form.email-active {
+  opacity: 1;
+  pointer-events: auto;
 }

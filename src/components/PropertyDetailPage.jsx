@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Container, Row, Col, Button, Carousel } from 'react-bootstrap';
+import { Container, Row, Col, Button, Carousel, Alert } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import CustomSpinner from './CustomSpinner';
 import { houseDrawingWithGreenGarden } from "../assets/images/houseDrawings"
@@ -8,6 +8,8 @@ import SendEmailForm from './SendEmailForm';
 
 const PropertyDetailPage = () => {
     const { id } = useParams()
+    const [showEmailSuccess, setShowEmailSuccess] = useState(false)
+    const [isEmailFormVisible, setIsEmailFormVisible] = useState(false)
     const [wantToSendEmail, setWantToSendEmail] = useState(false)
     const [property, setProperty] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
@@ -59,6 +61,9 @@ const PropertyDetailPage = () => {
         getPropertyImages(id)
         console.log('id di questa casa', id)
     }, [id])
+    useEffect(() => {
+        setIsEmailFormVisible(wantToSendEmail)
+    }, [wantToSendEmail])
     return (
         <div className={isLoading ? 'd-flex justify-content-center align-items-center flex-grow-1' : 'overflow-hidden'}>
             {isLoading ?
@@ -135,7 +140,7 @@ const PropertyDetailPage = () => {
                                     </div>
                                 </div>
                                 <div>
-                                    <Button variant='primary' className='text-primary bg-black' id='invia-una-mail' onClick={() => {
+                                    <Button variant='primary' className='text-primary bg-black invia-una-mail' onClick={() => {
                                         setWantToSendEmail(!wantToSendEmail)
                                     }}>
                                         INVIA UNA MAIL AL PROPRIETARIO
@@ -143,8 +148,18 @@ const PropertyDetailPage = () => {
                                 </div>
                             </div>
                             {wantToSendEmail &&
-                                <SendEmailForm property={property} thumbnail={propertyImages[0]} />
+                                <SendEmailForm
+                                    property={property}
+                                    thumbnail={propertyImages[0]}
+                                    wantToSendEmail={wantToSendEmail}
+                                    setWantToSendEmail={setWantToSendEmail}
+                                    isEmailFormVisible={isEmailFormVisible}
+                                    setIsEmailFormVisible={setIsEmailFormVisible}
+                                    setShowEmailSuccess={setShowEmailSuccess}
+                                />
+
                             }
+                            {showEmailSuccess && <Alert className="fs-5" variant="success" onClose={() => setShowEmailSuccess(false)} dismissible>Messaggio inviato! ✉️🚀</Alert>}
                         </Col>
                     </Row>
                 </Container>)
