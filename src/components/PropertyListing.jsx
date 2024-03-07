@@ -107,7 +107,7 @@ const PropertyListing = ({ property }) => {
     }
 
     return (
-        <Card className="m-5">
+        <Card className="m-5 rounded-4 overflow-hidden" style={{ border: '3px solid #8dc53e' }}>
             {isLoading && <Card.Img variant="top" src={houseDrawingWithGreenGarden} style={{ height: '140px' }} />}
             {!isLoading && <Card.Img variant="top" src={thumbnailUrl ? thumbnailUrl : "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg"} style={{ height: '140px' }} />}
             <Card.Body style={{ height: '200px', overflow: 'hidden' }} className="d-flex flex-column justify-content-between">
