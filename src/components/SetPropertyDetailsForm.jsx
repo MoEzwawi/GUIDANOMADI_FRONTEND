@@ -78,7 +78,7 @@ const SetPropertyDetailsForm = () => {
             newErrors.numberOfRooms = "⚠️ Numero di stanze non valido"
         }
 
-        if (formData.sizeSqMeters <= 30) {
+        if (formData.sizeSqMeters < 30) {
             newErrors.sizeSqMeters = "⚠️ La metratura minima consentita è di 30mq"
         }
 
