@@ -25,7 +25,7 @@ const MyFooter = () => {
                         <a target="_blank" rel="noreferrer" style={{ color: '#8d8c7c' }} href="https://www.linkedin.com/in/mohamed-ezwawi-developer/" alt="Mohamed Ezwawi LinkedIn">
                             <Linkedin className="ms-sm-2 me-sm-3 me-1" /></a>
                     </p>
-                    <p className="mb-0 fs-6 ps-0 ps-sm-5 mx-1">GUIDANOMADI {year} &copy;</p>
+                    <p className="mb-0 fs-6 ps-0 ps-sm-5 mx-1" style={{ cursor: 'pointer' }}>GUIDANOMADI {year} &copy;</p>
                     <p className="mb-0 fs-4"><Instagram className="icona me-sm-2 me-1" /><Youtube className="icona mx-sm-2 me-1" /><Facebook className="icona mx-sm-2 me-1" /><TwitterX className="icona ms-sm-2 me-sm-3 me-1" /></p>
                 </div>
             </Container>) : null

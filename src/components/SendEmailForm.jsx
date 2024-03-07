@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { serviceId, templateId, myPublicKey } from '../mailConfig';
 import { Alert, Button, Form } from 'react-bootstrap';
+import HomeMadeSpinner from './HomeMadeSpinner';
 
 export const SendEmailForm = ({ property, thumbnail, wantToSendEmail, setWantToSendEmail, isEmailFormVisible, setIsEmailFormVisible, setShowEmailSuccess }) => {
     const form = useRef();
@@ -46,16 +47,22 @@ export const SendEmailForm = ({ property, thumbnail, wantToSendEmail, setWantToS
     const sendEmail = (e) => {
         e.preventDefault();
         if (formData.message.length > 0) {
+            setIsLoading(true)
             emailjs
                 .sendForm(serviceId, templateId, form.current, {
                     publicKey: myPublicKey,
                 })
                 .then(
                     () => {
-                        console.log('SUCCESS!');
-                        setWantToSendEmail(!wantToSendEmail)
-                        setIsEmailFormVisible(false)
-                        setShowEmailSuccess(true)
+                        setTimeout(() => {
+                            console.log('SUCCESS!');
+                            setWantToSendEmail(!wantToSendEmail)
+                            setIsEmailFormVisible(false)
+                            setShowEmailSuccess(true)
+                            setShowEmptyMessageAlert(false)
+                            setEmailFail(false)
+                            setIsLoading(false)
+                        }, 400);
                     },
                     (error) => {
                         console.log('FAILED...', error)
@@ -68,7 +75,7 @@ export const SendEmailForm = ({ property, thumbnail, wantToSendEmail, setWantToS
     };
 
     return (
-        <Form ref={form} onSubmit={sendEmail} className={isEmailFormVisible ? 'send-email-form email-active mt-4' : 'send-email-form mt-4'}>
+        <Form ref={form} onSubmit={sendEmail} className={isEmailFormVisible ? 'send-email-form email-active mt-3' : 'send-email-form mt-4'}>
             <Form.Control className='d-none' name='to_name' value={formData.to_name} />
             <Form.Control className='d-none' name='from_name' value={formData.from_name} />
             <Form.Control className='d-none' name='from_surname' value={formData.from_surname} />
@@ -78,11 +85,12 @@ export const SendEmailForm = ({ property, thumbnail, wantToSendEmail, setWantToS
             <Form.Control className='d-none' name='image_url' value={formData.image_url} />
             <Form.Control placeholder='Inserisci il tuo messaggio' autoFocus
                 name='message' className='text-area bg-tertiary' rows={4} as='textarea' value={formData.message} onChange={handleInputChange} />
-            <div className='mt-3 d-flex justify-content-end'>
-                <Button type='submit' className='me-2 text-primary bg-black invia-una-mail'>INVIA</Button>
+            <div className='mt-2 d-flex justify-content-end'>
+                <Button type='submit' className='me-2 text-primary bg-black invia-una-mail d-flex justify-content-center align-items-center'
+                    style={{ height: '40px', width: '100px' }}>{isLoading ? <HomeMadeSpinner /> : 'INVIA'}</Button>
             </div>
-            {showEmptyMessageAlert && <Alert className="fs-5" variant="success" onClose={() => setShowEmptyMessageAlert(false)} dismissible>⚠️ Attenzione, non puoi inviare un messaggio vuoto!</Alert>}
-            {emailFail && <Alert className="fs-5" variant="success" onClose={() => setEmailFail(false)} dismissible>Non siamo riusciti a inviare il messaggio 😕</Alert>}
+            {showEmptyMessageAlert && <Alert className="fs-6" variant="success" onClose={() => setShowEmptyMessageAlert(false)} dismissible>⚠️ Attenzione, non puoi inviare un messaggio vuoto!</Alert>}
+            {emailFail && <Alert className="fs-6" variant="success" onClose={() => setEmailFail(false)} dismissible>Non siamo riusciti a inviare il messaggio 😕</Alert>}
         </Form>
     )
 };
