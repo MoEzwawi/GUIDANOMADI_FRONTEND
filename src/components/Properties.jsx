@@ -66,8 +66,12 @@ const Properties = () => {
                 case "Bali":
                     countryParameter = 'Indonesia'
                     break;
-                default:
+                case "Tenerife":
                     countryParameter = 'Spagna'
+                    break;
+                default:
+                    countryParameter = null
+                    break;
             }
             setQueryParams({
                 country: countryParameter,

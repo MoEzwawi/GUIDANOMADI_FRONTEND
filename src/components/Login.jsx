@@ -41,7 +41,7 @@ const Login = () => {
             <div className="p-5 bg-primary mx-3 mx-md-auto rounded" style={{ maxWidth: '576px', marginTop: '6em' }}>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
+                        <Form.Label>E-mail</Form.Label>
                         <Form.Control
                             type="email"
                             placeholder="Enter email"

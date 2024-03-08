@@ -15,7 +15,7 @@ export const loginAction = (obj) => {
             });
 
             if (!res.ok) {
-                throw new Error("⚠️ Username o password errati");
+                throw new Error("⚠️ E-mail o password errati");
             }
 
             const data = await res.json();

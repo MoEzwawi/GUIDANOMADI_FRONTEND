@@ -92,7 +92,7 @@ const Register = () => {
                             onChange={(e) => handleInputChange('email', e.target.value)}
                         />
                     </Form.Group>
-                    {errorEmail && userWroteSth && <Alert variant="danger">⚠️ Inserisci un indirizzo email valido</Alert>}
+                    {errorEmail && userWroteSth && <Alert variant="danger">⚠️ Inserisci un indirizzo e-mail valido</Alert>}
                     <Form.Group className='mb-3' controlId="password">
                         <Form.Label>Password:</Form.Label>
                         <Form.Control
