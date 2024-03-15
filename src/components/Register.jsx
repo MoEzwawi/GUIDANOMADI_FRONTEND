@@ -103,6 +103,7 @@ const Register = () => {
                         />
                     </Form.Group>
                     {errorPw && userWroteSth && <Alert variant="danger">⚠️ La password deve contenere minimo sei caratteri e almeno un numero</Alert>}
+                    {/*QUI AGGIUNGERE IL CAMPO CONFERMA PASSWORD!*/}
                     <Button variant="dark" type="submit">
                         <span className="text-primary">REGIS</span><span>TRATI</span>
                     </Button>

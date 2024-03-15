@@ -96,8 +96,10 @@ const MyPropertyListing = ({ property, listingHasBeenDeleted }) => {
                     </div>
                     <Card.Text>
                         {property.price} {property.listingType === 'FOR_SALE' ? '€' : '€ / mese'}<br />
-                        {property.address.country} <br />
-                        <img src={`https://flagsapi.com/${currentCountryCode}/flat/16.png`} alt="country" /><br />
+                        <div className="d-flex justify-content-between align-items-center">
+                            {property.address.country}
+                            <img src={`https://flagsapi.com/${currentCountryCode}/flat/32.png`} alt="country" />
+                        </div>
                         {property.address.city} <br />
                         {property.listingType === 'FOR_SALE' ? 'In vendita' : 'In affitto'}
                     </Card.Text>
